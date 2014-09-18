@@ -1,13 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="helloWorld">
 <head>
     <meta http-equiv='Content-type' content='text/html; charset=utf-8'>
     <title>AngularJS Example</title>
     <link rel="stylesheet" type="text/css" href="screen.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.2/angular.js"></script>
+    <script src="example.js"></script>
 </head>
 <body>
-
-    <p>To Do</p>
-
+    <div ng-controller="ExampleController">
+        <label>Name:</label>
+        <input type="text" ng-model="first" placeholder="Enter a name here">
+        <input type="text" ng-model="second" placeholder="some text">
+        <hr>
+        <h1>Hello {{first}}!</h1>
+        <p>{{second}}</p>
+        <p>Constructed: {{constructed()}}</p>
+    </div>
 </body>
 </html>
