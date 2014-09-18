@@ -1,0 +1,18 @@
+{
+  "name": "unneeded",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "node": "0.10.26",
+    "npm": "1.4.3"
+  },
+  "dependencies": {
+    "procfile": "~0.1.1"
+  },
+  "devDependencies": {
+    "simplebuild-jshint": "^0.3.0",
+    "jake": "^8.0.1",
+    "jshint": "^2.5.2",
+    "http-server": "^0.6.1"
+  }
+}
