@@ -8,6 +8,55 @@ module.controller("ExampleController", ["$scope", function ($scope) {
 
 }]);
 
+module.directive("configurationPanel", function() {
+	return {
+		restrict: "E",
+		transclude: false,
+		scope: {},
+		controller: function($scope, $element) {
+
+		},
+		template:
+			'<div class="config">' +
+				'<configuration-field>Starting Balance:</configuration-field>' +
+				'<configuration-field>Starting Cost Basis:</configuration-field>' +
+				'<configuration-field>Yearly Spending:</configuration-field>' +
+		  '</div>',
+		replace: true
+	};
+});
+
+module.directive("stockMarketTable", function() {
+	return {
+		restrict: "E",
+		transclude: false,
+		scope: {},
+		controller: function($scope, $element) {
+
+		},
+		template:
+			'<table class="stockmarket">' +
+        '<thead>' +
+          '<tr>' +
+            '<th>Year</th>' +
+            '<th>Starting Balance</th>' +
+            '<th>Cost Basis</th>' +
+            '<th>Sell Orders</th>' +
+            '<th>Taxes</th>' +
+            '<th>Growth</th>' +
+            '<th>Ending Balance</th>' +
+          '</tr>' +
+        '</thead>' +
+        '<tbody>' +
+          '<tr stock-market-row></tr>' +
+          '<tr stock-market-row></tr>' +
+          '<tr stock-market-row></tr>' +
+        '</tbody>' +
+      '</table>',
+		replace: true
+	};
+});
+
 module.directive("stockMarketRow", function() {
 	return {
 		restrict: "A",
@@ -24,7 +73,7 @@ module.directive("stockMarketRow", function() {
 			'<td class="negative">($232)</td>' +
 			'<td>$907</td>' +
       '<td>$9,981</td>'
-	}
+	};
 });
 
 module.directive("configurationField", function() {

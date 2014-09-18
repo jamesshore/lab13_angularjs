@@ -13,33 +13,11 @@
         <h1>Financial Projector</h1>
         <h2>An AngularJS Example from <em>Let’s Code: Test-Driven JavaScript</em></h2>
 
-        <div class="config">
-            <configuration-field>Starting Balance:</configuration-field>
-            <configuration-field>Starting Cost Basis:</configuration-field>
-            <configuration-field>Yearly Spending:</configuration-field>
-        </div>
+        <configuration-panel></configuration-panel>
 
         <hr />
 
-        <table class="stockmarket">
-          <thead>
-            <tr>
-              <th>Year</th>
-              <th>Starting Balance</th>
-              <th>Cost Basis</th>
-              <th>Sell Orders</th>
-              <th>Taxes</th>
-              <th>Growth</th>
-              <th>Ending Balance</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr stock-market-row></tr>
-            <tr stock-market-row></tr>
-            <tr stock-market-row></tr>
-          </tbody>
-        </table>
-
+        <stock-market-table></stock-market-table>
 
         <div className="footer">
   	      <p>This application demonstrates AngularJS. The financial calculations are made up. Do not use it for real finances.</p>
