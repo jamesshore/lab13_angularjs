@@ -3,7 +3,7 @@ The Lab: Front-End Frameworks: AngularJS
 
 This repository contains the sample code for the forthcoming Front-End Frameworks: AngularJS episodes of James Shore's screencast. Let's Code: Test-Driven JavaScript is a screencast series focused on rigorous, professional JavaScript development.
 
-This is a work in progress.
+This code will be livestreamed! Check out http://www.letscodejavascript.com/v3/blog/2014/09/angular_livestream for details. 
 
 
 Setup
