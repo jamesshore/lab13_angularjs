@@ -2,6 +2,8 @@
 (function() {
 	"use strict";
 
+	var helloWorld = angular.module("helloWorld");
+
 	helloWorld.directive("stockMarketTable", function() {
 		return {
 			restrict: "E",
