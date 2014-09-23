@@ -2,7 +2,7 @@
 (function() {
 	"use strict";
 
-	var stockMarketTable = angular.module("stockMarketTable", []);
+	var stockMarketTable = module.exports = angular.module("stockMarketTable", []);
 
 	stockMarketTable.directive("stockMarketTable", function() {
 		return {

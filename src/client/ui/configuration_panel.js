@@ -2,7 +2,7 @@
 (function() {
 	"use strict";
 
-	var configurationPanel = angular.module("configurationPanel", []);
+	var configurationPanel = module.exports = angular.module("configurationPanel", []);
 
 	configurationPanel.directive("configurationPanel", function() {
 		return {

@@ -2,10 +2,10 @@
 (function() {
 	"use strict";
 
-	var foo = require("./ui/configuration_panel.js");
-	var bar = require("./ui/stock_market_table.js");
+	var configurationPanel = require("./ui/configuration_panel.js");
+	var stockMarketTable = require("./ui/stock_market_table.js");
 
-	var helloWorld = angular.module("helloWorld", ["configurationPanel", "stockMarketTable"]);
+	var helloWorld = angular.module("helloWorld", [configurationPanel.name, stockMarketTable.name]);
 	helloWorld.controller("ExampleController", ["$scope", function ($scope) {
 		$scope.startingBalance="start";
 	}]);
