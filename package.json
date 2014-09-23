@@ -14,6 +14,7 @@
     "http-server": "^0.6.1",
     "jake": "^8.0.1",
     "jshint": "^2.5.2",
+    "shelljs": "^0.3.0",
     "simplebuild-jshint": "^0.3.0"
   }
 }
