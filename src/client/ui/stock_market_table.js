@@ -2,9 +2,9 @@
 (function() {
 	"use strict";
 
-	var helloWorld = angular.module("helloWorld");
+	var stockMarketTable = angular.module("stockMarketTable", []);
 
-	helloWorld.directive("stockMarketTable", function() {
+	stockMarketTable.directive("stockMarketTable", function() {
 		return {
 			restrict: "E",
 			transclude: false,
@@ -35,7 +35,7 @@
 		};
 	});
 
-	helloWorld.directive("stockMarketRow", function() {
+	stockMarketTable.directive("stockMarketRow", function() {
 		return {
 			restrict: "A",
 			transclude: false,

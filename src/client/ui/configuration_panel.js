@@ -2,9 +2,9 @@
 (function() {
 	"use strict";
 
-	var helloWorld = angular.module("helloWorld");
+	var configurationPanel = angular.module("configurationPanel", []);
 
-	helloWorld.directive("configurationPanel", function() {
+	configurationPanel.directive("configurationPanel", function() {
 		return {
 			restrict: "E",
 			transclude: false,
@@ -23,7 +23,7 @@
 	});
 
 
-	helloWorld.directive("configurationField", function() {
+	configurationPanel.directive("configurationField", function() {
 
 		return {
 			restrict: "E",

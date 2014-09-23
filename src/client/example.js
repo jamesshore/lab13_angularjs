@@ -2,7 +2,7 @@
 (function() {
 	"use strict";
 
-	var helloWorld = angular.module("helloWorld", []);
+	var helloWorld = angular.module("helloWorld", ["configurationPanel", "stockMarketTable"]);
 	helloWorld.controller("ExampleController", ["$scope", function ($scope) {
 		$scope.startingBalance="start";
 	}]);
