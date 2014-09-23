@@ -112,6 +112,9 @@
 	function clientLintGlobals() {
 		var globals = globalLintGlobals();
 
+		// Angular
+		globals.angular = false;
+
 		// Karma
 		globals.console = false;
 		globals.dump = false;
