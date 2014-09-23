@@ -14,12 +14,16 @@
 	];
 
 	var jshint = require("simplebuild-jshint");
+	var shell = require("shelljs");
 	var browserify = require("./build/util/browserify_runner.js");
 
 	var GENERATED_DIR = "generated";
+	var BROWSERIFY_DIR = GENERATED_DIR + "/browserify";
 	var DEPLOY_DIR = GENERATED_DIR + "/deploy";
 	var CLIENT_DIR = "src/client";
+	var VENDOR_DIR = "src/vendor";
 
+	directory(BROWSERIFY_DIR);
 	directory(DEPLOY_DIR);
 
 	desc("Delete generated files");
@@ -28,7 +32,7 @@
 	});
 
 	desc("Lint, test, and build");
-	task("default", [ "lint" ], function() {
+	task("default", [ "lint", "build" ], function() {
 		console.log("\n\nOK");
 	});
 
@@ -36,6 +40,20 @@
 	task("run", [ "browserify" ], function() {
 		jake.exec("node ./node_modules/http-server/bin/http-server src/client", { interactive: true }, complete);
 	}, {async: true});
+
+	desc("Create deployable client files");
+	task("build", [ DEPLOY_DIR, "browserify" ], function() {
+		console.log("Building deploy dir: .");
+		shell.rm("-rf", DEPLOY_DIR + "/*");
+		shell.cp("-R",
+				CLIENT_DIR + "/*.html",
+				CLIENT_DIR + "/*.css",
+				CLIENT_DIR + "/*.png",
+				BROWSERIFY_DIR + "/*",
+				VENDOR_DIR,
+			DEPLOY_DIR
+		);
+	});
 
 	desc("Lint everything");
 	task("lint", [ "lintNode", "lintClientJs" ]);
@@ -58,12 +76,11 @@
 		}, complete, fail);
 	}, { async: true });
 
-	task("browserify", [ DEPLOY_DIR ], function() {
+	task("browserify", [ BROWSERIFY_DIR ], function() {
 		console.log("Bundling client JavaScript with Browserify: .");
-		browserify.bundle(CLIENT_DIR + "/example.js", DEPLOY_DIR + "/bundle.js", complete, fail);
+		browserify.bundle(CLIENT_DIR + "/example.js", BROWSERIFY_DIR + "/bundle.js", complete, fail);
 		complete();
 	}, { async: true });
-
 
 	function clientJsFiles() {
 		return new jake.FileList(CLIENT_DIR + "/**/*.js").toArray();
