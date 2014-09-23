@@ -37,8 +37,8 @@
 	});
 
 	desc("Start HTTP server for manual testing");
-	task("run", [ "browserify" ], function() {
-		jake.exec("node ./node_modules/http-server/bin/http-server src/client", { interactive: true }, complete);
+	task("run", [ "build" ], function() {
+		jake.exec("node ./node_modules/http-server/bin/http-server " + DEPLOY_DIR, { interactive: true }, complete);
 	}, {async: true});
 
 	desc("Create deployable client files");
