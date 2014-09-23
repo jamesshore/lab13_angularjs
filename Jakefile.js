@@ -14,9 +14,13 @@
 	];
 
 	var jshint = require("simplebuild-jshint");
+	var browserify = require("./build/util/browserify_runner.js");
 
 	var GENERATED_DIR = "generated";
+	var DEPLOY_DIR = GENERATED_DIR + "/deploy";
 	var CLIENT_DIR = "src/client";
+
+	directory(DEPLOY_DIR);
 
 	desc("Delete generated files");
 	task("clean", function() {
@@ -29,7 +33,7 @@
 	});
 
 	desc("Start HTTP server for manual testing");
-	task("run", function() {
+	task("run", [ "browserify" ], function() {
 		jake.exec("node ./node_modules/http-server/bin/http-server src/client", { interactive: true }, complete);
 	}, {async: true});
 
@@ -52,6 +56,12 @@
 			options: clientLintOptions(),
 			globals: clientLintGlobals()
 		}, complete, fail);
+	}, { async: true });
+
+	task("browserify", [ DEPLOY_DIR ], function() {
+		console.log("Bundling client JavaScript with Browserify: .");
+		browserify.bundle(CLIENT_DIR + "/example.js", DEPLOY_DIR + "/bundle.js", complete, fail);
+		complete();
 	}, { async: true });
 
 
