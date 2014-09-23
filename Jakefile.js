@@ -79,7 +79,6 @@
 	task("browserify", [ BROWSERIFY_DIR ], function() {
 		console.log("Bundling client JavaScript with Browserify: .");
 		browserify.bundle(CLIENT_DIR + "/example.js", BROWSERIFY_DIR + "/bundle.js", complete, fail);
-		complete();
 	}, { async: true });
 
 	function clientJsFiles() {
