@@ -154,6 +154,9 @@
 		// Angular
 		globals.angular = false;
 
+		// Angular Testing
+		globals.inject = false;
+
 		// Karma
 		globals.console = false;
 		globals.dump = false;
