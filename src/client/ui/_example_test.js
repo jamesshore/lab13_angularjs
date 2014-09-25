@@ -4,7 +4,7 @@
 describe("Nothing", function() {
 
 	it("tests nothing", function() {
-		expect(false).to.equal(true);
+		expect(true).to.equal(true);
 	});
 
 });
