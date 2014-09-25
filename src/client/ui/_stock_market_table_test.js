@@ -3,25 +3,33 @@
 
 //var stockMarketTable = require("./stock_market_table.js");
 
-describe("StockMarketTable", function() {
+describe("StockMarketTableRow", function() {
 
 	var $compile;
 	var $rootScope;
 
-	beforeEach(inject(function(_$compile_, _$rootScope_) {
+	beforeEach(angular.mock.module("stockMarketTable"));
+
+	beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_) {
 		$compile = _$compile_;
 		$rootScope = _$rootScope_;
-
-		angular.module("stockMarketTable");
 	}));
 
-	it("does nothing", function() {
-		expect($compile).to.be.ok();
-		expect($rootScope).to.be.ok();
-
-		var element = $compile("<div><stock-market-row></stock-market-row></div>")($rootScope);
+	it("renders as HTML", function() {
+		var element = $compile("<table><tr stock-market-row></tr></table>")($rootScope);
 		$rootScope.$digest();
-		dump(element, element.html());
+		expect(element.html()).to.equal(
+			'<tbody>' +
+				'<tr stock-market-row="" class="ng-isolate-scope">' +
+					'<td>2010</td>' +
+					'<td class="ng-binding"></td>' +
+					'<td>$7,000</td>' +
+					'<td class="negative">($695)</td>' +
+					'<td class="negative">($232)</td>' +
+					'<td>$907</td>' +
+					'<td>$9,981</td>' +
+				'</tr>' +
+			'</tbody>');
 	});
 
 });
