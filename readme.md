@@ -26,8 +26,6 @@ Running the Sample Application
 Running the Tests
 -----------------
 
-(Note: tests aren't set up yet, so ignore this section for now. But you can lint by running step 3.)
-
 1. Run `./jake.sh karma` (Unix/Mac) or `jake karma` (Windows) to start the Karma server.
 2. Start the browsers you want to test and point each one at `http://localhost:9876`.
 3. Run `./jake.sh` (Unix/Mac) or `jake` (Windows) every time you want to build and test.
