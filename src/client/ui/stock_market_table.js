@@ -44,13 +44,16 @@
 				$scope.startingBalance = "9876";
 			},
 			template:
-				'<td>2010</td>' +
-	      '<td>{{startingBalance}}</td>' +
-	      '<td>$7,000</td>' +
-				'<td class="negative">($695)</td>' +
-				'<td class="negative">($232)</td>' +
-				'<td>$907</td>' +
-	      '<td>$9,981</td>'
+				'<tr>' +
+					'<td>2010</td>' +
+		      '<td>{{startingBalance}}</td>' +
+		      '<td>$7,000</td>' +
+					'<td class="negative">($695)</td>' +
+					'<td class="negative">($232)</td>' +
+					'<td>$907</td>' +
+		      '<td>$9,981</td>' +
+				'</tr>',
+			replace: true
 		};
 	});
 

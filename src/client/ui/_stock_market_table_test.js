@@ -16,7 +16,7 @@ describe("StockMarketTableRow", function() {
 	}));
 
 	it("it hard-codes starting balance", function() {
-		var element = $compile("<table><tr stock-market-row></tr></table>")($rootScope);
+		var element = $compile("<table><tbody><tr stock-market-row></tr></tbody></table>")($rootScope);
 		$rootScope.$digest();
 		var startingBalanceCell = element.find("td").eq(1);
 		expect(startingBalanceCell.html()).to.equal("9876");
