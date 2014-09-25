@@ -5,17 +5,19 @@
 
 	// Uncomment and modify the following list to cause the build to fail unless these browsers are tested.
 	var REQUIRED_BROWSERS = [
-//		"IE 8.0.0 (Windows 7)",
-//		"IE 9.0.0 (Windows 7)",
-//		"Firefox 31.0.0 (Mac OS X 10.8)",
-//		"Chrome 37.0.2062 (Mac OS X 10.8.5)",
-//		"Safari 6.1.6 (Mac OS X 10.8.5)",
-//		"Mobile Safari 7.0.0 (iOS 7.1)"
+		"IE 9.0.0 (Windows 7)",
+		"IE 10.0.0 (Windows 7)",
+		"IE 11.0.0 (Windows 7)",
+		"Firefox 31.0.0 (Mac OS X 10.8)",
+		"Chrome 37.0.2062 (Mac OS X 10.8.5)",
+		"Safari 6.1.6 (Mac OS X 10.8.5)",
+		"Mobile Safari 7.0.0 (iOS 7.1)"
 	];
 
 	var jshint = require("simplebuild-jshint");
 	var shell = require("shelljs");
 	var browserify = require("./build/util/browserify_runner.js");
+	var karma = require("./build/util/karma_runner.js");
 
 	var GENERATED_DIR = "generated";
 	var BROWSERIFY_DIR = GENERATED_DIR + "/browserify";
@@ -32,14 +34,25 @@
 	});
 
 	desc("Lint, test, and build");
-	task("default", [ "lint", "build" ], function() {
+	task("default", [ "lint", "test", "build" ], function() {
 		console.log("\n\nOK");
 	});
+
+	desc("Start Karma server -- run this first");
+	task("karma", function() {
+		karma.serve(complete, fail);
+	}, {async: true});
 
 	desc("Start HTTP server for manual testing");
 	task("run", [ "build" ], function() {
 		jake.exec("node ./node_modules/http-server/bin/http-server " + DEPLOY_DIR, { interactive: true }, complete);
 	}, {async: true});
+
+	desc("Test everything");
+	task("test", [], function() {
+		console.log("Testing client code:");
+		karma.runTests(REQUIRED_BROWSERS, complete, fail);
+	}, { async: true} );
 
 	desc("Create deployable client files");
 	task("build", [ DEPLOY_DIR, "browserify" ], function() {
