@@ -41,7 +41,7 @@
 			transclude: false,
 			scope: {},
 			controller: function($scope, $element) {
-
+				$scope.startingBalance = "9876";
 			},
 			template:
 				'<td>2010</td>' +
