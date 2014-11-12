@@ -48,7 +48,15 @@ describe("StockMarketTableRow", function() {
 		expect(startingBalanceCell.html()).to.equal("click1");
 
 		// Note: there does not seem to be a way to define event parameters (such as pageX/pageY).
-		// Although presumably I could do it via the DOM or jQuery (but not AngularJS's jQueryLite).
+		// Although presumably I could do it via the DOM or with jQuery (but not AngularJS's jQueryLite).
+	});
+
+	it("copies starting balance from attribute", function() {
+		var element = $compile("<table><tbody><tr stock-market-row balance='foo'></tr></tbody></table>")($rootScope);
+		$rootScope.$digest();
+		var rowScope = element.find("tr").eq(0).isolateScope();
+
+		expect(rowScope.startingBalance).to.equal("foo");
 	});
 
 //	it("renders as HTML", function() {

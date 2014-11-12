@@ -26,7 +26,7 @@
 	          '</tr>' +
 	        '</thead>' +
 	        '<tbody>' +
-	          '<tr stock-market-row></tr>' +
+	          '<tr stock-market-row balance="42"></tr>' +
 	          '<tr stock-market-row></tr>' +
 	          '<tr stock-market-row></tr>' +
 	        '</tbody>' +
@@ -40,10 +40,11 @@
 			restrict: "A",
 			transclude: false,
 			scope: {},
-			controller: function($scope, $element) {
+			link: function($scope, $element, attrs) {
 				var i = 0;
 
-				$scope.startingBalance = "9876";
+				$scope.startingBalance = attrs.balance;
+				if ($scope.startingBalance === undefined) $scope.startingBalance = "9876";
 
 				$scope.setStartingBalance = function setStartingBalance(balance) {
 					$scope.startingBalance = balance;
