@@ -42,6 +42,10 @@
 			scope: {},
 			controller: function($scope, $element) {
 				$scope.startingBalance = "9876";
+
+				$scope.setStartingBalance = function setStartingBalance(balance) {
+					$scope.startingBalance = balance;
+				};
 			},
 			template:
 				'<tr>' +

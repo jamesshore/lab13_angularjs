@@ -29,6 +29,15 @@ describe("StockMarketTableRow", function() {
 		expect(row.isolateScope().startingBalance).to.equal("9876");
 	});
 
+	it("allows starting balance to be changed", function() {
+		var element = $compile("<table><tbody><tr stock-market-row></tr></tbody></table>")($rootScope);
+
+		var rowScope = element.find("tr").eq(0).isolateScope();
+
+		rowScope.setStartingBalance("foo");
+		expect(rowScope.startingBalance).to.equal("foo");
+	});
+
 //	it("renders as HTML", function() {
 //		var element = $compile("<table><tr stock-market-row></tr></table>")($rootScope);
 //		$rootScope.$digest();
