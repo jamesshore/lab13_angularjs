@@ -56,11 +56,11 @@
 
 			//link: function($scope, $element) {
 			//	$element.on("click", function(event) {
-			//		console.log("Hi: (" + event.pageX + ", " + event.pageY + ")");
 			//		$scope.startingBalance = "(" + event.pageX + ", " + event.pageY + ")";
 			//		$scope.$apply();
 			//	});
 			//},
+
 			template:
 				'<tr ng-click="handleClick()">' +
 				//'<tr>' +

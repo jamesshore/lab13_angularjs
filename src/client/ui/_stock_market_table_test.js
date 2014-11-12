@@ -40,9 +40,15 @@ describe("StockMarketTableRow", function() {
 
 	it("changes starting balance on a click", function() {
 		var element = $compile("<table><tbody><tr stock-market-row></tr></tbody></table>")($rootScope);
+		$rootScope.$digest();
 		var row = element.find("tr").eq(0);
+		var startingBalanceCell = element.find("td").eq(1);
 
+		row.triggerHandler("click");
+		expect(startingBalanceCell.html()).to.equal("click1");
 
+		// Note: there does not seem to be a way to define event parameters (such as pageX/pageY).
+		// Although presumably I could do it via the DOM or jQuery (but not AngularJS's jQueryLite).
 	});
 
 //	it("renders as HTML", function() {
