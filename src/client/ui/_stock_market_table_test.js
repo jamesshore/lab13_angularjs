@@ -18,8 +18,15 @@ describe("StockMarketTableRow", function() {
 	it("it hard-codes starting balance", function() {
 		var element = $compile("<table><tbody><tr stock-market-row></tr></tbody></table>")($rootScope);
 		$rootScope.$digest();
+
+		var row = element.find("tr").eq(0);
 		var startingBalanceCell = element.find("td").eq(1);
+
+		// we can get starting balance from HTML
 		expect(startingBalanceCell.html()).to.equal("9876");
+
+		// or from scope
+		expect(row.isolateScope().startingBalance).to.equal("9876");
 	});
 
 //	it("renders as HTML", function() {
