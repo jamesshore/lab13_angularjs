@@ -41,14 +41,29 @@
 			transclude: false,
 			scope: {},
 			controller: function($scope, $element) {
+				var i = 0;
+
 				$scope.startingBalance = "9876";
 
 				$scope.setStartingBalance = function setStartingBalance(balance) {
 					$scope.startingBalance = balance;
 				};
+
+				$scope.handleClick = function handleClick() {
+					$scope.startingBalance = "click" + (++i);
+				};
 			},
+
+			//link: function($scope, $element) {
+			//	$element.on("click", function(event) {
+			//		console.log("Hi: (" + event.pageX + ", " + event.pageY + ")");
+			//		$scope.startingBalance = "(" + event.pageX + ", " + event.pageY + ")";
+			//		$scope.$apply();
+			//	});
+			//},
 			template:
-				'<tr>' +
+				'<tr ng-click="handleClick()">' +
+				//'<tr>' +
 					'<td>2010</td>' +
 		      '<td>{{startingBalance}}</td>' +
 		      '<td>$7,000</td>' +

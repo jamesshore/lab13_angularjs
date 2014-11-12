@@ -38,6 +38,13 @@ describe("StockMarketTableRow", function() {
 		expect(rowScope.startingBalance).to.equal("foo");
 	});
 
+	it("changes starting balance on a click", function() {
+		var element = $compile("<table><tbody><tr stock-market-row></tr></tbody></table>")($rootScope);
+		var row = element.find("tr").eq(0);
+
+
+	});
+
 //	it("renders as HTML", function() {
 //		var element = $compile("<table><tr stock-market-row></tr></table>")($rootScope);
 //		$rootScope.$digest();
