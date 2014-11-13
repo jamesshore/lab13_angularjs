@@ -14,8 +14,8 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-	    'src/vendor/angular-1.3.0-rc.2.js',
-	    'src/vendor/angular-mocks-1.3.0-rc.2.js',
+	    'src/vendor/angular-1.3.2.js',
+	    'src/vendor/angular-mocks-1.3.2.js',    // angular-mocks MUST be loaded after angular
       'src/client/**/*.js'
     ],
 
