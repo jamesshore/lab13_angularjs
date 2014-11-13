@@ -1,14 +1,14 @@
 // Copyright (c) 2014 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
 "use strict";
 
-//var stockMarketTable = require("./stock_market_table.js");
+var stockMarketTable = require("./stock_market_table.js");
 
 describe("StockMarketTableRow", function() {
 
 	var $compile;
 	var $rootScope;
 
-	beforeEach(angular.mock.module("stockMarketTable"));
+	beforeEach(angular.mock.module(stockMarketTable.name));
 
 	beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_) {
 		$compile = _$compile_;
