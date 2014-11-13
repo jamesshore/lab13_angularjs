@@ -9,9 +9,6 @@
 			restrict: "E",
 			transclude: false,
 			scope: {},
-			controller: function($scope, $element) {
-
-			},
 			template:
 				'<table class="stockmarket">' +
 	        '<thead>' +
@@ -40,18 +37,18 @@
 			restrict: "A",
 			transclude: false,
 			scope: {},
-			link: function($scope, $element, attrs) {
+			link: function(scope, element, attrs) {
 				var i = 0;
 
-				$scope.startingBalance = attrs.balance;
-				if ($scope.startingBalance === undefined) $scope.startingBalance = "9876";
+				scope.startingBalance = attrs.balance;
+				if (scope.startingBalance === undefined) scope.startingBalance = "9876";
 
-				$scope.setStartingBalance = function setStartingBalance(balance) {
-					$scope.startingBalance = balance;
+				scope.setStartingBalance = function setStartingBalance(balance) {
+					scope.startingBalance = balance;
 				};
 
-				$scope.handleClick = function handleClick() {
-					$scope.startingBalance = "click" + (++i);
+				scope.handleClick = function handleClick() {
+					scope.startingBalance = "click" + (++i);
 				};
 			},
 
