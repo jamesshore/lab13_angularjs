@@ -2,7 +2,9 @@
 (function() {
 	"use strict";
 
-	var stockMarketTable = module.exports = angular.module("stockMarketTable", []);
+	var stockMarketRow = require("./stock_market_row.js");
+
+	var stockMarketTable = module.exports = angular.module("stockMarketTable", [ stockMarketRow.name ]);
 
 	stockMarketTable.directive("stockMarketTable", function() {
 		return {
@@ -28,48 +30,6 @@
 	          '<tr stock-market-row></tr>' +
 	        '</tbody>' +
 	      '</table>',
-			replace: true
-		};
-	});
-
-	stockMarketTable.directive("stockMarketRow", function() {
-		return {
-			restrict: "A",
-			transclude: false,
-			scope: {},
-			link: function(scope, element, attrs) {
-				var i = 0;
-
-				scope.startingBalance = attrs.balance;
-				if (scope.startingBalance === undefined) scope.startingBalance = "9876";
-
-				scope.setStartingBalance = function setStartingBalance(balance) {
-					scope.startingBalance = balance;
-				};
-
-				scope.handleClick = function handleClick() {
-					scope.startingBalance = "click" + (++i);
-				};
-			},
-
-			//link: function($scope, $element) {
-			//	$element.on("click", function(event) {
-			//		$scope.startingBalance = "(" + event.pageX + ", " + event.pageY + ")";
-			//		$scope.$apply();
-			//	});
-			//},
-
-			template:
-				'<tr ng-click="handleClick()">' +
-				//'<tr>' +
-					'<td>2010</td>' +
-		      '<td>{{startingBalance}}</td>' +
-		      '<td>$7,000</td>' +
-					'<td class="negative">($695)</td>' +
-					'<td class="negative">($232)</td>' +
-					'<td>$907</td>' +
-		      '<td>$9,981</td>' +
-				'</tr>',
 			replace: true
 		};
 	});
