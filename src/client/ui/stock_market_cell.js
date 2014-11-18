@@ -8,19 +8,21 @@ stockMarketCell.directive("stockMarketCell", function() {
 		restrict: "A",
 		transclude: false,
 		link: function(scope, element, attrs) {
+			scope.$watch("value", function() {
+				var target = new RenderTarget();
 
-			var target = new RenderTarget();
-		  scope.value.renderTo(target);
-			scope.renderedValue = target.text();
-			if (target.isNegative()) element.addClass("negative");
+			  scope.value.renderTo(target);
+				scope.renderedValue = target.text();
+				if (target.isNegative()) element.addClass("negative");
 
-			if (target.isInvalid()) {
-				element.html("<img src='/invalid_dollars.png' />");
-				element.attr("title", target.tooltip());
-			}
-			else {
-				element.html(target.text());
-			}
+				if (target.isInvalid()) {
+					element.html("<img src='/invalid_dollars.png' />");
+					element.attr("title", target.tooltip());
+				}
+				else {
+					element.html(target.text());
+				}
+			});
 		},
 		scope: {
 			value: '=value'

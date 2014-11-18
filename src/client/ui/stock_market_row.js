@@ -2,45 +2,37 @@
 (function() {
 	"use strict";
 
-	var stockMarketRow = module.exports = angular.module("stockMarketRow", []);
+	var StockMarketCell = require("./stock_market_cell.js");
+	var Year = require("../values/year.js");
+	var ValidDollars = require("../values/valid_dollars.js");
+	var InvalidDollars = require("../values/invalid_dollars.js");
+
+	var stockMarketRow = module.exports = angular.module("stockMarketRow", [StockMarketCell.name]);
 
 	stockMarketRow.directive("stockMarketRow", function() {
 		return {
 			restrict: "A",
 			transclude: false,
 			scope: {},
-			link: function(scope, element, attrs) {
-				var i = 0;
-
-				scope.startingBalance = attrs.balance;
-				if (scope.startingBalance === undefined) scope.startingBalance = "9876";
-
-				scope.setStartingBalance = function setStartingBalance(balance) {
-					scope.startingBalance = balance;
-				};
-
-				scope.handleClick = function handleClick() {
-					scope.startingBalance = "click" + (++i);
-				};
-			},
-
-			//link: function($scope, $element) {
-			//	$element.on("click", function(event) {
-			//		$scope.startingBalance = "(" + event.pageX + ", " + event.pageY + ")";
-			//		$scope.$apply();
-			//	});
-			//},
+			controller: [ "$scope", function($scope) {
+				$scope.year = new Year(2010);
+				$scope.startingBalance = new ValidDollars(10000);
+				$scope.costBasis = new ValidDollars(7000);
+				$scope.sellOrders = new InvalidDollars();
+				$scope.taxes = new ValidDollars(-232);
+				$scope.growth = new ValidDollars(907);
+				$scope.endingBalance = new ValidDollars(9981);
+			} ],
 
 			template:
-				'<tr ng-click="handleClick()">' +
-				//'<tr>' +
-					'<td>2010</td>' +
-		      '<td>{{startingBalance}}</td>' +
-		      '<td>$7,000</td>' +
-					'<td class="negative">($695)</td>' +
-					'<td class="negative">($232)</td>' +
-					'<td>$907</td>' +
-		      '<td>$9,981</td>' +
+				'<tr>' +
+					'<td stock-market-cell value="year"></td>' +
+					'<td stock-market-cell value="startingBalance"></td>' +
+					'<td stock-market-cell value="costBasis"></td>' +
+					'<td stock-market-cell value="sellOrders"></td>' +
+					'<td stock-market-cell value="taxes"></td>' +
+					'<td stock-market-cell value="growth"></td>' +
+					'<td stock-market-cell value="endingBalance"></td>' +
 				'</tr>',
 			replace: true
 		};

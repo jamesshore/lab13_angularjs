@@ -10,57 +10,59 @@ describe("StockMarketCell", function() {
 
 	var $compile;
 	var $rootScope;
+	var parentScope;
 
 	beforeEach(angular.mock.module(stockMarketCell.name));
 
 	beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_) {
 		$compile = _$compile_;
 		$rootScope = _$rootScope_;
+		parentScope = $rootScope.$new();
 	}));
 
 	it("render a value that's in the parent scope", function() {
-		var parentScope = $rootScope.$new();
-
 		parentScope.year = new Year(1984);
+		var cell = createCell("year");
 
-		var html = "<table><tbody><tr><td stock-market-cell value='year'></td></tr></tbody></table>";
-		var element = $compile(html)(parentScope);
-		$rootScope.$digest();
-
-		var cell = element.find("td").eq(0);
 		expect(cell.html()).to.equal("1984");
 		expect(cell.hasClass("negative")).to.be(false);
 	});
 
 	it("renders negative values", function() {
-		var parentScope = $rootScope.$new();
-
 		parentScope.dollars = new ValidDollars(-30);
+		var cell = createCell("dollars");
 
-		var html = "<table><tbody><tr><td stock-market-cell value='dollars'></td></tr></tbody></table>";
-		var element = $compile(html)(parentScope);
-		$rootScope.$digest();
-
-		var cell = element.find("td").eq(0);
 		expect(cell.html()).to.equal(parentScope.dollars.toString());
 		expect(cell.hasClass("negative")).to.be(true);
 	});
 
 	it("renders invalid values", function() {
-		var parentScope = $rootScope.$new();
-
 		parentScope.dollars = new InvalidDollars();
+		var cell = createCell("dollars");
+		var img = cell.find("img");
 
-		var html = "<table><tbody><tr><td stock-market-cell value='dollars'></td></tr></tbody></table>";
-		var element = $compile(html)(parentScope);
-		$rootScope.$digest();
-
-		var cell = element.find("td").eq(0);
-		expect(cell.html()).to.equal('<img src="/invalid_dollars.png">');
+		expect(img.attr("src")).to.equal("/invalid_dollars.png");
 		expect(cell.hasClass("negative")).to.be(false);
 		expect(cell.attr("title")).to.be("Invalid dollar amount");
 	});
 
+	it("updates cell when underlying value changes", function() {
+		parentScope.year = new Year(1984);
+		var cell = createCell("year");
+
+		parentScope.year = new Year(2001);
+		$rootScope.$digest();
+
+		expect(cell.html()).to.equal("2001");
+	});
+
 	// TODO: make sure text is sanitized
+
+	function createCell(valueProperty) {
+		var html = "<table><tbody><tr><td stock-market-cell value='" + valueProperty + "'></td></tr></tbody></table>";
+		var element = $compile(html)(parentScope);
+		$rootScope.$digest();
+		return element.find("td").eq(0);
+	}
 
 });
