@@ -56,6 +56,13 @@ describe("StockMarketCell", function() {
 		expect(cell.html()).to.equal("2001");
 	});
 
+	it("sanitizes text", function() {
+		parentScope.evil = new EvilValueObject();
+		var cell = createCell("evil");
+
+		expect(cell.html()).to.equal(EvilValueObject.sanitizedText);
+	});
+
 	// TODO: make sure text is sanitized
 
 	function createCell(valueProperty) {
@@ -64,5 +71,20 @@ describe("StockMarketCell", function() {
 		$rootScope.$digest();
 		return element.find("td").eq(0);
 	}
+
+	function EvilValueObject() {}
+
+	EvilValueObject.sanitizedText = "&lt;a&gt;&lt;/a&gt;";
+
+	EvilValueObject.prototype.renderTo = function renderTo(target) {
+		target.render({
+			text: "<a></a>",
+			negative: false,
+			invalid: false
+		});
+	};
+
+
+
 
 });

@@ -20,7 +20,7 @@ stockMarketCell.directive("stockMarketCell", function() {
 					element.attr("title", target.tooltip());
 				}
 				else {
-					element.html(target.text());
+					element.text(target.text());
 				}
 			});
 		},

@@ -16,7 +16,8 @@
 			scope: {},
 			controller: [ "$scope", function($scope) {
 				$scope.year = new Year(2010);
-				$scope.startingBalance = new ValidDollars(10000);
+				//$scope.startingBalance = new UserEnteredDollars(10000);
+				$scope.startingBalance = new EvilValueObject();
 				$scope.costBasis = new ValidDollars(7000);
 				$scope.sellOrders = new InvalidDollars();
 				$scope.taxes = new ValidDollars(-232);
@@ -37,6 +38,16 @@
 			replace: true
 		};
 	});
+
+	function EvilValueObject() {}
+
+	EvilValueObject.prototype.renderTo = function renderTo(target) {
+		target.render({
+			text: "<a href='javascript:alert(\"Gotcha!\")'>Click me</a>",
+			negative: false,
+			invalid: false
+		});
+	};
 
 })();
 
