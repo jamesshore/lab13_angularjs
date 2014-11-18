@@ -13,16 +13,19 @@
 		return {
 			restrict: "A",
 			transclude: false,
-			scope: {},
+			scope: {
+				value: "=value"
+			},
 			controller: [ "$scope", function($scope) {
-				$scope.year = new Year(2010);
-				//$scope.startingBalance = new UserEnteredDollars(10000);
-				$scope.startingBalance = new EvilValueObject();
-				$scope.costBasis = new ValidDollars(7000);
-				$scope.sellOrders = new InvalidDollars();
-				$scope.taxes = new ValidDollars(-232);
-				$scope.growth = new ValidDollars(907);
-				$scope.endingBalance = new ValidDollars(9981);
+				var value = $scope.value;
+
+				$scope.year = value.year();
+				$scope.startingBalance = value.startingBalance();
+				$scope.costBasis = value.startingCostBasis();
+				$scope.sellOrders = value.totalSellOrders().flipSign();
+				$scope.taxes = value.capitalGainsTaxIncurred().flipSign();
+				$scope.growth = value.growth();
+				$scope.endingBalance = value.endingBalance();
 			} ],
 
 			template:
@@ -38,16 +41,6 @@
 			replace: true
 		};
 	});
-
-	function EvilValueObject() {}
-
-	EvilValueObject.prototype.renderTo = function renderTo(target) {
-		target.render({
-			text: "<a href='javascript:alert(\"Gotcha!\")'>Click me</a>",
-			negative: false,
-			invalid: false
-		});
-	};
 
 })();
 

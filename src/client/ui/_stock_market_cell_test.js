@@ -63,8 +63,6 @@ describe("StockMarketCell", function() {
 		expect(cell.html()).to.equal(EvilValueObject.sanitizedText);
 	});
 
-	// TODO: make sure text is sanitized
-
 	function createCell(valueProperty) {
 		var html = "<table><tbody><tr><td stock-market-cell value='" + valueProperty + "'></td></tr></tbody></table>";
 		var element = $compile(html)(parentScope);
@@ -83,8 +81,5 @@ describe("StockMarketCell", function() {
 			invalid: false
 		});
 	};
-
-
-
 
 });
