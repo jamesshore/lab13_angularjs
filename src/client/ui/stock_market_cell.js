@@ -13,11 +13,17 @@ stockMarketCell.directive("stockMarketCell", function() {
 		  scope.value.renderTo(target);
 			scope.renderedValue = target.text();
 			if (target.isNegative()) element.addClass("negative");
+
+			if (target.isInvalid()) {
+				element.html("<img src='/invalid_dollars.png' />");
+			}
+			else {
+				element.html(target.text());
+			}
 		},
 		scope: {
 			value: '=value'
-		},
-		template: '{{renderedValue}}'
+		}
 	};
 });
 
@@ -35,6 +41,10 @@ RenderTarget.prototype.text = function text() {
 
 RenderTarget.prototype.isNegative = function isNegative() {
 	return this._rendering.negative;
+};
+
+RenderTarget.prototype.isInvalid = function isInvalid() {
+	return this._rendering.invalid;
 };
 
 //

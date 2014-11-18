@@ -4,6 +4,7 @@
 var stockMarketCell = require("./stock_market_cell.js");
 var Year = require("../values/year.js");
 var ValidDollars = require("../values/valid_dollars.js");
+var InvalidDollars = require("../values/invalid_dollars.js");
 
 describe("StockMarketCell", function() {
 
@@ -45,6 +46,21 @@ describe("StockMarketCell", function() {
 		expect(cell.hasClass("negative")).to.be(true);
 	});
 
-	
+	it("renders invalid values", function() {
+		var parentScope = $rootScope.$new();
+
+		parentScope.dollars = new InvalidDollars();
+
+		var html = "<table><tbody><tr><td stock-market-cell value='dollars'></td></tr></tbody></table>";
+		var element = $compile(html)(parentScope);
+		$rootScope.$digest();
+
+		var cell = element.find("td").eq(0);
+		expect(cell.html()).to.equal('<img src="/invalid_dollars.png">');
+		expect(cell.hasClass("negative")).to.be(false);
+		// should have tooltip
+	});
+
+	// TODO: make sure text is sanitized
 
 });
