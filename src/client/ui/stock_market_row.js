@@ -17,17 +17,18 @@
 				value: "=value"
 			},
 			controller: [ "$scope", function($scope) {
-				var value = $scope.value;
+				$scope.$watch("value", function() {
+					var value = $scope.value;
 
-				$scope.year = value.year();
-				$scope.startingBalance = value.startingBalance();
-				$scope.costBasis = value.startingCostBasis();
-				$scope.sellOrders = value.totalSellOrders().flipSign();
-				$scope.taxes = value.capitalGainsTaxIncurred().flipSign();
-				$scope.growth = value.growth();
-				$scope.endingBalance = value.endingBalance();
+					$scope.year = value.year();
+					$scope.startingBalance = value.startingBalance();
+					$scope.costBasis = value.startingCostBasis();
+					$scope.sellOrders = value.totalSellOrders().flipSign();
+					$scope.taxes = value.capitalGainsTaxIncurred().flipSign();
+					$scope.growth = value.growth();
+					$scope.endingBalance = value.endingBalance();
+				});
 			} ],
-
 			template:
 				'<tr>' +
 					'<td stock-market-cell value="year"></td>' +

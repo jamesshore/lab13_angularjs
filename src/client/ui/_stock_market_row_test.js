@@ -45,7 +45,29 @@ describe("StockMarketRow", function() {
 		checkDirective(cells[6], '<td stock-market-cell value="endingBalance"></td>', "endingBalance", new ValidDollars(927));
 	});
 
-	// TODO: can we clean up the linking between stock market row and stock market cell?
+	it("updates when year changes", function() {
+		parentScope.year = new StockMarketYear(
+			new Year(1984),
+			new ValidDollars(986),
+			new ValidDollars(20),
+			new GrowthRate(10),
+			new TaxRate(30)
+		);
+		var row = createRow("year");
+		var cells = row.find("td");
+
+		parentScope.year = new StockMarketYear(
+			new Year(2948),
+			new ValidDollars(1),
+			new ValidDollars(2),
+			new GrowthRate(3),
+			new TaxRate(4)
+		);
+		$rootScope.$digest();
+
+		checkDirective(cells[0], '<td stock-market-cell value="year"></td>', "year", new Year(2948));
+	});
+
 
 	function checkDirective(actualRow, expectedHtml, propertyName, expectedValue) {
 		var expectedRendering = renderCell(expectedHtml, propertyName, expectedValue);
