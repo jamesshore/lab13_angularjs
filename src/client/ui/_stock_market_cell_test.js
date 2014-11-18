@@ -58,7 +58,7 @@ describe("StockMarketCell", function() {
 		var cell = element.find("td").eq(0);
 		expect(cell.html()).to.equal('<img src="/invalid_dollars.png">');
 		expect(cell.hasClass("negative")).to.be(false);
-		// should have tooltip
+		expect(cell.attr("title")).to.be("Invalid dollar amount");
 	});
 
 	// TODO: make sure text is sanitized

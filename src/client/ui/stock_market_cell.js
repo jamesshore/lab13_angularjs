@@ -16,6 +16,7 @@ stockMarketCell.directive("stockMarketCell", function() {
 
 			if (target.isInvalid()) {
 				element.html("<img src='/invalid_dollars.png' />");
+				element.attr("title", target.tooltip());
 			}
 			else {
 				element.html(target.text());
@@ -45,6 +46,10 @@ RenderTarget.prototype.isNegative = function isNegative() {
 
 RenderTarget.prototype.isInvalid = function isInvalid() {
 	return this._rendering.invalid;
+};
+
+RenderTarget.prototype.tooltip = function tooltip() {
+	return this._rendering.tooltip;
 };
 
 //
