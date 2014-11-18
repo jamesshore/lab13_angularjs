@@ -3,6 +3,7 @@
 
 var stockMarketCell = require("./stock_market_cell.js");
 var Year = require("../values/year.js");
+var ValidDollars = require("../values/valid_dollars.js");
 
 describe("StockMarketCell", function() {
 
@@ -27,6 +28,23 @@ describe("StockMarketCell", function() {
 
 		var cell = element.find("td").eq(0);
 		expect(cell.html()).to.equal("1984");
+		expect(cell.hasClass("negative")).to.be(false);
 	});
+
+	it("renders negative values", function() {
+		var parentScope = $rootScope.$new();
+
+		parentScope.dollars = new ValidDollars(-30);
+
+		var html = "<table><tbody><tr><td stock-market-cell value='dollars'></td></tr></tbody></table>";
+		var element = $compile(html)(parentScope);
+		$rootScope.$digest();
+
+		var cell = element.find("td").eq(0);
+		expect(cell.html()).to.equal(parentScope.dollars.toString());
+		expect(cell.hasClass("negative")).to.be(true);
+	});
+
+	
 
 });
