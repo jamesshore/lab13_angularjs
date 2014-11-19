@@ -15,7 +15,7 @@ describe("StockMarketTable", function() {
 	var $rootScope;
 	var firstYear;
 	var parentScope;
-	var rows;
+	var table;
 
 	beforeEach(angular.mock.module(stockMarketTable.name));
 
@@ -34,12 +34,12 @@ describe("StockMarketTable", function() {
 
 		parentScope = $rootScope.$new();
 		parentScope.projection = projection;
-		rows = createTable("projection");
+		table = createTable("projection");
 	}));
 
 	it("renders first year", function() {
 		checkDirective(
-			rows[0],
+			rows()[0],
 			'<tr stock-market-row value="year"></tr>',
 			"year",
 			firstYear
@@ -47,27 +47,36 @@ describe("StockMarketTable", function() {
 	});
 
 	it("renders multiple years", function() {
-		expect(rows.length).to.equal(41);
+		expect(rows().length).to.equal(41);
 	});
 
 	it("renders each year differently", function() {
-		var lastYearCell = rows.eq(40).find("td");
+		var lastYearCell = rows().eq(40).find("td");
 		expect(lastYearCell.html()).to.equal("2050");
 	});
 
-	// test that it changes when projection changes
+	it("updates table when projection changes", function() {
+		parentScope.projection = new StockMarketProjection(firstYear, new Year(2020), new ValidDollars(999));
+		$rootScope.$digest();
 
-	function checkDirective(actual, expectedHtml, propertyName, expectedValue) {
-		var expectedRendering = renderRow(expectedHtml, propertyName, expectedValue);
-		var actualRendering = actual.innerHTML;
-		expect(actualRendering).to.equal(expectedRendering);
+		expect(rows().length).to.equal(11);
+	});
+
+	function rows() {
+		return table.find("tbody").find("tr");
 	}
 
 	function createTable(property) {
 		var html = "<stock-market-table projection='" + property + "'></stock-market-table>";
 		var element = $compile(html)(parentScope);
 		$rootScope.$digest();
-		return element.find("tbody").find("tr");
+		return element;
+	}
+
+	function checkDirective(actual, expectedHtml, propertyName, expectedValue) {
+		var expectedRendering = renderRow(expectedHtml, propertyName, expectedValue);
+		var actualRendering = actual.innerHTML;
+		expect(actualRendering).to.equal(expectedRendering);
 	}
 
 	function renderRow(html, propertyName, expectedValue) {

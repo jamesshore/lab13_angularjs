@@ -16,13 +16,15 @@
 			restrict: "E",
 			transclude: false,
 			scope: {
-				projection: "="
+				projection: "=projection"
 			},
 			controller: [ "$scope", function($scope) {
-				$scope.years = [];
-			  for (var i = 0; i < ($scope.projection.numberOfYears()); i++) {
-				  $scope.years.push($scope.projection.getYearOffset(i));
-		    }
+				$scope.$watch("projection", function() {
+					$scope.years = [];
+				  for (var i = 0; i < ($scope.projection.numberOfYears()); i++) {
+					  $scope.years.push($scope.projection.getYearOffset(i));
+			    }
+				});
 			} ],
 			template:
 				'<table class="stockmarket">' +
