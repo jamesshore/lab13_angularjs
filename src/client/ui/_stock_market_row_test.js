@@ -14,6 +14,7 @@ describe("StockMarketRow", function() {
 	var $compile;
 	var $rootScope;
 	var parentScope;
+	var cells;
 
 	beforeEach(angular.mock.module(stockMarketRow.name));
 
@@ -21,9 +22,7 @@ describe("StockMarketRow", function() {
 		$compile = _$compile_;
 		$rootScope = _$rootScope_;
 		parentScope = $rootScope.$new();
-	}));
 
-	it("renders a stock market year", function() {
 		parentScope.year = new StockMarketYear(
 			new Year(1984),
 			new ValidDollars(986),
@@ -34,8 +33,10 @@ describe("StockMarketRow", function() {
 		parentScope.year.sell(new ValidDollars(100));
 
 		var row = createRow("year");
-		var cells = row.find("td");
+		cells = row.find("td");
+	}));
 
+	it("renders a stock market year", function() {
 		checkDirective(cells[0], '<td stock-market-cell value="year"></td>', "year", new Year(1984));
 		checkDirective(cells[1], '<td stock-market-cell value="startingBalance"></td>', "startingBalance", new ValidDollars(986));
 		checkDirective(cells[2], '<td stock-market-cell value="costBasis"></td>', "costBasis", new ValidDollars(20));
@@ -47,16 +48,6 @@ describe("StockMarketRow", function() {
 
 	it("updates when year changes", function() {
 		parentScope.year = new StockMarketYear(
-			new Year(1984),
-			new ValidDollars(986),
-			new ValidDollars(20),
-			new GrowthRate(10),
-			new TaxRate(30)
-		);
-		var row = createRow("year");
-		var cells = row.find("td");
-
-		parentScope.year = new StockMarketYear(
 			new Year(2948),
 			new ValidDollars(1),
 			new ValidDollars(2),
@@ -67,7 +58,6 @@ describe("StockMarketRow", function() {
 
 		checkDirective(cells[0], '<td stock-market-cell value="year"></td>', "year", new Year(2948));
 	});
-
 
 	function checkDirective(actualRow, expectedHtml, propertyName, expectedValue) {
 		var expectedRendering = renderCell(expectedHtml, propertyName, expectedValue);
