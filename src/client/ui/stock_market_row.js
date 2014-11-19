@@ -3,9 +3,6 @@
 	"use strict";
 
 	var StockMarketCell = require("./stock_market_cell.js");
-	var Year = require("../values/year.js");
-	var ValidDollars = require("../values/valid_dollars.js");
-	var InvalidDollars = require("../values/invalid_dollars.js");
 
 	var stockMarketRow = module.exports = angular.module("stockMarketRow", [StockMarketCell.name]);
 

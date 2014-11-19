@@ -15,15 +15,11 @@
 		return {
 			restrict: "E",
 			transclude: false,
-			scope: {},
+			scope: {
+				projection: "="
+			},
 			controller: [ "$scope", function($scope) {
-				$scope.year = new StockMarketYear(
-					new Year(1984),
-					new ValidDollars(986),
-					new ValidDollars(20),
-					new GrowthRate(10),
-					new TaxRate(30)
-				);
+				$scope.firstYear = $scope.projection.getYearOffset(0);
 			} ],
 			template:
 				'<table class="stockmarket">' +
@@ -39,9 +35,7 @@
 	          '</tr>' +
 	        '</thead>' +
 	        '<tbody>' +
-	          '<tr stock-market-row value="year"></tr>' +
-	          '<tr stock-market-row value="year"></tr>' +
-	          '<tr stock-market-row value="year"></tr>' +
+	          '<tr stock-market-row value="firstYear"></tr>' +
 	        '</tbody>' +
 	      '</table>',
 			replace: true

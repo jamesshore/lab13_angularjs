@@ -2,78 +2,70 @@
 "use strict";
 
 var stockMarketTable = require("./stock_market_table.js");
+var StockMarketProjection = require("../domain/stock_market_projection.js");
+var StockMarketYear = require("../domain/stock_market_year.js");
+var Year = require("../values/year.js");
+var ValidDollars = require("../values/valid_dollars.js");
+var GrowthRate = require("../values/growth_rate.js");
+var TaxRate = require("../values/tax_rate.js");
 
-//describe("StockMarketTableRow", function() {
-//
-//	var $compile;
-//	var $rootScope;
-//
-//	beforeEach(angular.mock.module(stockMarketTable.name));
-//
-//	beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_) {
-//		$compile = _$compile_;
-//		$rootScope = _$rootScope_;
-//	}));
-//
-//	it("it hard-codes starting balance", function() {
-//		var element = $compile("<table><tbody><tr stock-market-row></tr></tbody></table>")($rootScope);
-//		$rootScope.$digest();
-//
-//		var row = element.find("tr").eq(0);
-//		var startingBalanceCell = element.find("td").eq(1);
-//
-//		// we can get starting balance from HTML
-//		expect(startingBalanceCell.html()).to.equal("9876");
-//
-//		// or from scope
-//		expect(row.isolateScope().startingBalance).to.equal("9876");
-//	});
-//
-//	it("allows starting balance to be changed", function() {
-//		var element = $compile("<table><tbody><tr stock-market-row></tr></tbody></table>")($rootScope);
-//
-//		var rowScope = element.find("tr").eq(0).isolateScope();
-//
-//		rowScope.setStartingBalance("foo");
-//		expect(rowScope.startingBalance).to.equal("foo");
-//	});
-//
-//	it("changes starting balance on a click", function() {
-//		var element = $compile("<table><tbody><tr stock-market-row></tr></tbody></table>")($rootScope);
-//		$rootScope.$digest();
-//		var row = element.find("tr").eq(0);
-//		var startingBalanceCell = element.find("td").eq(1);
-//
-//		row.triggerHandler("click");
-//		expect(startingBalanceCell.html()).to.equal("click1");
-//
-//		// Note: there does not seem to be a way to define event parameters (such as pageX/pageY).
-//		// Although presumably I could do it via the DOM or with jQuery (but not AngularJS's jQueryLite).
-//	});
-//
-//	it("copies starting balance from attribute", function() {
-//		var element = $compile("<table><tbody><tr stock-market-row balance='foo'></tr></tbody></table>")($rootScope);
-//		$rootScope.$digest();
-//		var rowScope = element.find("tr").eq(0).isolateScope();
-//
-//		expect(rowScope.startingBalance).to.equal("foo");
-//	});
-//
-////	it("renders as HTML", function() {
-////		var element = $compile("<table><tr stock-market-row></tr></table>")($rootScope);
-////		$rootScope.$digest();
-////		expect(element.html()).to.equal(
-////			'<tbody>' +
-////				'<tr stock-market-row="" class="ng-isolate-scope">' +
-////					'<td>2010</td>' +
-////					'<td class="ng-binding"></td>' +
-////					'<td>$7,000</td>' +
-////					'<td class="negative">($695)</td>' +
-////					'<td class="negative">($232)</td>' +
-////					'<td>$907</td>' +
-////					'<td>$9,981</td>' +
-////				'</tr>' +
-////			'</tbody>');
-////	});
-//
-//});
+describe("StockMarketTable", function() {
+
+	var $compile;
+	var $rootScope;
+	var firstYear;
+	var parentScope;
+	var rows;
+
+	beforeEach(angular.mock.module(stockMarketTable.name));
+
+	beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_) {
+		$compile = _$compile_;
+		$rootScope = _$rootScope_;
+
+		firstYear = new StockMarketYear(
+			new Year(2010),
+			new ValidDollars(10000),
+			new ValidDollars(3000),
+			new GrowthRate(10),
+			new TaxRate(25)
+		);
+		var projection = new StockMarketProjection(firstYear, new Year(2050), new ValidDollars(36));
+
+		parentScope = $rootScope.$new();
+		parentScope.projection = projection;
+		rows = createTable("projection");
+	}));
+
+	it("renders first year", function() {
+		checkDirective(
+			rows[0],
+			'<tr stock-market-row value="firstYear"></tr>',
+			"firstYear",
+			firstYear
+		);
+	});
+
+	// test that it changes when projection changes
+
+	function checkDirective(actual, expectedHtml, propertyName, expectedValue) {
+		var expectedRendering = renderRow(expectedHtml, propertyName, expectedValue);
+		var actualRendering = actual.outerHTML;
+		expect(actualRendering).to.equal(expectedRendering);
+	}
+
+	function createTable(property) {
+		var html = "<stock-market-table projection='" + property + "'></stock-market-table>";
+		var element = $compile(html)(parentScope);
+		$rootScope.$digest();
+		return element.find("tbody").find("tr");
+	}
+
+	function renderRow(html, propertyName, expectedValue) {
+		var expectedScope = $rootScope.$new();
+		expectedScope[propertyName] = expectedValue;
+		var element = $compile("<table><tbody>" + html + "</tbody></table>")(expectedScope);
+		expectedScope.$digest();
+		return element.find("tr")[0].outerHTML;
+	}
+});
