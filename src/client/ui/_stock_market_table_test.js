@@ -40,17 +40,26 @@ describe("StockMarketTable", function() {
 	it("renders first year", function() {
 		checkDirective(
 			rows[0],
-			'<tr stock-market-row value="firstYear"></tr>',
-			"firstYear",
+			'<tr stock-market-row value="year"></tr>',
+			"year",
 			firstYear
 		);
+	});
+
+	it("renders multiple years", function() {
+		expect(rows.length).to.equal(41);
+	});
+
+	it("renders each year differently", function() {
+		var lastYearCell = rows.eq(40).find("td");
+		expect(lastYearCell.html()).to.equal("2050");
 	});
 
 	// test that it changes when projection changes
 
 	function checkDirective(actual, expectedHtml, propertyName, expectedValue) {
 		var expectedRendering = renderRow(expectedHtml, propertyName, expectedValue);
-		var actualRendering = actual.outerHTML;
+		var actualRendering = actual.innerHTML;
 		expect(actualRendering).to.equal(expectedRendering);
 	}
 
@@ -66,6 +75,6 @@ describe("StockMarketTable", function() {
 		expectedScope[propertyName] = expectedValue;
 		var element = $compile("<table><tbody>" + html + "</tbody></table>")(expectedScope);
 		expectedScope.$digest();
-		return element.find("tr")[0].outerHTML;
+		return element.find("tr")[0].innerHTML;
 	}
 });

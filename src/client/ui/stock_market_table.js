@@ -19,7 +19,10 @@
 				projection: "="
 			},
 			controller: [ "$scope", function($scope) {
-				$scope.firstYear = $scope.projection.getYearOffset(0);
+				$scope.years = [];
+			  for (var i = 0; i < ($scope.projection.numberOfYears()); i++) {
+				  $scope.years.push($scope.projection.getYearOffset(i));
+		    }
 			} ],
 			template:
 				'<table class="stockmarket">' +
@@ -35,7 +38,7 @@
 	          '</tr>' +
 	        '</thead>' +
 	        '<tbody>' +
-	          '<tr stock-market-row value="firstYear"></tr>' +
+	          '<tr stock-market-row ng-repeat="year in years" value="year"></tr>' +
 	        '</tbody>' +
 	      '</table>',
 			replace: true
