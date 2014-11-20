@@ -2,7 +2,9 @@
 (function() {
 	"use strict";
 
-	var configurationPanel = module.exports = angular.module("configurationPanel", []);
+	var configurationField = require("./configuration_field.js");
+
+	var configurationPanel = module.exports = angular.module("configurationPanel", [ configurationField.name ]);
 
 	configurationPanel.directive("configurationPanel", function() {
 		return {
@@ -20,26 +22,6 @@
 			  '</div>',
 			replace: true
 		};
-	});
-
-
-	configurationPanel.directive("configurationField", function() {
-
-		return {
-			restrict: "E",
-			transclude: true,
-			scope: {},
-			controller: function($scope, $element) {
-
-			},
-			template:
-				'<div class="config">' +
-				' <label ng-transclude></label>' +
-				' <input type="text" class="invalid" title="Tooltip">' +
-				'</div>',
-			replace: true
-		};
-
 	});
 
 })();
