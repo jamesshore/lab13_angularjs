@@ -16,7 +16,7 @@ describe("ConfigurationField", function() {
 		$rootScope = _$rootScope_;
 	}));
 
-	it("defaults to an initial value", function() {
+	it.only("defaults to an initial value", function() {
 		var parentScope = $rootScope.$new();
 		parentScope.initialValue = new UserEnteredDollars("123");
 
@@ -42,6 +42,21 @@ describe("ConfigurationField", function() {
 		expect(inputField.attr("value")).to.be("xxx");
 		expect(inputField.hasClass("invalid")).to.be(true);
 		expect(inputField.attr("title")).to.be("Invalid dollar amount");
+	});
+
+	it("changes rendering when user input changes", function() {
+		var parentScope = $rootScope.$new();
+		parentScope.initialValue = new UserEnteredDollars("123");
+
+		var html = "<configuration-field value='initialValue'>Title:</configuration-field>";
+		var element = $compile(html)(parentScope);
+		$rootScope.$digest();
+		var inputField = element.find("input");
+
+		parentScope.initialValue = new UserEnteredDollars("xxx");
+		$rootScope.$digest();
+
+		//expect(inputField.hasClass("invalid")).to.be(true);
 	});
 
 

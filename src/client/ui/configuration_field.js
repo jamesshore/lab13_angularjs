@@ -3,6 +3,7 @@
 	"use strict";
 
 	var configurationField = module.exports = angular.module("configurationField", []);
+	var UserEnteredDollars = require("../values/user_entered_dollars.js");
 
 	configurationField.directive("configurationField", function() {
 
@@ -13,13 +14,21 @@
 				value: "=value"
 			},
 			controller: function($scope, $element) {
-				var target = new RenderTarget($scope);
-				$scope.value.renderTo(target);
+				render();
+				$scope.$watch("renderedText", function() {
+					$scope.value = new UserEnteredDollars($scope.renderedText);
+					render();
+				});
+
+				function render() {
+					var target = new RenderTarget($scope);
+					$scope.value.renderTo(target);
+				}
 			},
 			template:
 				'<div class="config">' +
 				' <label ng-transclude></label>' +
-				' <input type="text" ng-class="invalidClass" value="{{renderedText}}" title="{{title}}">' +
+				' <input type="text" ng-class="invalidClass" ng-model="renderedText" title="{{title}}">' +
 				'</div>',
 			replace: true
 		};
