@@ -15,14 +15,14 @@
 			},
 			controller: function($scope, $element) {
 				render();
-				$scope.$watch("renderedText", function() {
-					$scope.value = new UserEnteredDollars($scope.renderedText);
-					render();
-				});
+				// $scope.$watch("renderedText", function() {
+				// 	$scope.value = new UserEnteredDollars($scope.renderedText);
+				// 	render();
+				// });
 
 				function render() {
 					var target = new RenderTarget($scope);
-					$scope.value.renderTo(target);
+					$scope.value.instance.renderTo(target);
 				}
 			},
 			template:
@@ -40,9 +40,9 @@
 	}
 
 	RenderTarget.prototype.render = function render(values) {
-		this._scope.renderedText = this._scope.value.getUserText();
-		this._scope.invalidClass = values.invalid ? "invalid" : "";
-		this._scope.title = values.tooltip;
+		this._scope.renderedText = values.text;
+		// this._scope.invalidClass = values.invalid ? "invalid" : "";
+		// this._scope.title = values.tooltip;
 	};
 
 })();
