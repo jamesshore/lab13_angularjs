@@ -20,8 +20,12 @@
 				// 	render();
 				// });
 
+				$scope.$watch("value", function (value) {
+					render();
+				});
+
 				function render() {
-					var target = new RenderTarget($scope);
+					var target = new RenderTarget($scope, $scope.value.instance);
 					$scope.value.instance.renderTo(target);
 				}
 			},
@@ -35,12 +39,13 @@
 
 	});
 
-	function RenderTarget(scope) {
+	function RenderTarget(scope, value) {
 		this._scope = scope;
+		this._value = value;
 	}
 
 	RenderTarget.prototype.render = function render(values) {
-		this._scope.renderedText = values.text;
+		this._scope.renderedText = this._value.getUserText();
 		this._scope.invalidClass = values.invalid ? "invalid" : "";
 		this._scope.title = values.tooltip;
 	};
