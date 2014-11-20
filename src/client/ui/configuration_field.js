@@ -14,6 +14,8 @@
 				value: "=value"
 			},
 			controller: function($scope, $element) {
+				$scope._value = {};
+
 				render();
 				// $scope.$watch("renderedText", function() {
 				// 	$scope.value = new UserEnteredDollars($scope.renderedText);
@@ -32,7 +34,7 @@
 			template:
 				'<div class="config">' +
 				' <label ng-transclude></label>' +
-				' <input type="text" ng-class="invalidClass" ng-model="renderedText" title="{{title}}">' +
+				' <input type="text" ng-class="_value.invalidClass" ng-model="_value.renderedText" title="{{_value.title}}">' +
 				'</div>',
 			replace: true
 		};
@@ -45,9 +47,9 @@
 	}
 
 	RenderTarget.prototype.render = function render(values) {
-		this._scope.renderedText = this._value.getUserText();
-		this._scope.invalidClass = values.invalid ? "invalid" : "";
-		this._scope.title = values.tooltip;
+		this._scope._value.renderedText = this._value.getUserText();
+		this._scope._value.invalidClass = values.invalid ? "invalid" : "";
+		this._scope._value.title = values.tooltip;
 	};
 
 })();
