@@ -24,7 +24,7 @@
 			template:
 				'<div class="config">' +
 					'<configuration-field value="startingBalance">Starting Balance:</configuration-field>' +
-					'<configuration-field value="costBasis">Starting Cost Basis:</configuration-field>' +
+					'<configuration-field value="costBasis">Cost Basis:</configuration-field>' +
 					'<configuration-field value="spending">Yearly Spending:</configuration-field>' +
 			  '</div>',
 			replace: true

@@ -5,6 +5,7 @@
 	var configurationPanel = require("./ui/configuration_panel.js");
 	var stockMarketTable = require("./ui/stock_market_table.js");
 
+	var UserConfiguration = require("./persistence/user_configuration.js");
 	var StockMarketProjection = require("./domain/stock_market_projection.js");
 	var StockMarketYear = require("./domain/stock_market_year.js");
 	var Year = require("./values/year.js");
@@ -22,6 +23,7 @@
 			new TaxRate(25)
 		);
 		$scope.projection = new StockMarketProjection(firstYear, new Year(2050), new ValidDollars(36));
+		$scope.configuration = new UserConfiguration();
 	}]);
 
 })();
