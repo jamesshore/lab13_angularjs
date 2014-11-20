@@ -13,9 +13,9 @@
 			transclude: false,
 			scope: {},
 			controller: function($scope, $element) {
-				$scope.startingBalance = new UserEnteredDollars("123");
-				$scope.costBasis = new UserEnteredDollars("456");
-				$scope.spending = new UserEnteredDollars("789x");
+				$scope.startingBalance = {instance: new UserEnteredDollars("123")};
+				$scope.costBasis = {instance: new UserEnteredDollars("456")};
+				$scope.spending = {instance: new UserEnteredDollars("789x")};
 			},
 			template:
 				'<div class="config">' +
