@@ -3,7 +3,6 @@
 	"use strict";
 
 	var configurationField = require("./configuration_field.js");
-	var UserEnteredDollars = require("../values/user_entered_dollars.js");
 
 	var configurationPanel = module.exports = angular.module("configurationPanel", [ configurationField.name ]);
 
