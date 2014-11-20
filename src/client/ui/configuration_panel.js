@@ -11,12 +11,16 @@
 		return {
 			restrict: "E",
 			transclude: false,
-			scope: {},
-			controller: function($scope, $element) {
-				$scope.startingBalance = new UserEnteredDollars("123");
-				$scope.costBasis = new UserEnteredDollars("456");
-				$scope.spending = new UserEnteredDollars("789x");
+			scope: {
+				configuration: "=configuration"
 			},
+			controller: [ "$scope", function($scope) {
+				$scope.$watch("configuration", function() {
+					$scope.startingBalance = $scope.configuration.getStartingBalance();
+					$scope.costBasis = $scope.configuration.getStartingCostBasis();
+					$scope.spending = $scope.configuration.getYearlySpending();
+				});
+			} ],
 			template:
 				'<div class="config">' +
 					'<configuration-field value="startingBalance">Starting Balance:</configuration-field>' +

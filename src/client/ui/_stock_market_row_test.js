@@ -59,17 +59,17 @@ describe("StockMarketRow", function() {
 		checkDirective(cells[0], '<td stock-market-cell value="year"></td>', "year", new Year(2948));
 	});
 
-	function checkDirective(actualRow, expectedHtml, propertyName, expectedValue) {
-		var expectedRendering = renderCell(expectedHtml, propertyName, expectedValue);
-		var actualRendering = actualRow.outerHTML;
-		expect(actualRendering).to.equal(expectedRendering);
-	}
-
 	function createRow(valueProperty) {
 		var html = "<table><tbody><tr stock-market-row value='" + valueProperty + "'></tr></tbody></table>";
 		var element = $compile(html)(parentScope);
 		$rootScope.$digest();
 		return element.find("tr").eq(0);
+	}
+
+	function checkDirective(actualRow, expectedHtml, propertyName, expectedValue) {
+		var expectedRendering = renderCell(expectedHtml, propertyName, expectedValue);
+		var actualRendering = actualRow.outerHTML;
+		expect(actualRendering).to.equal(expectedRendering);
 	}
 
 	function renderCell(cellHtml, propertyName, expectedValue) {
