@@ -18,16 +18,18 @@ describe("ConfigurationField", function() {
 
 	it.only("defaults to an initial value", function() {
 		var parentScope = $rootScope.$new();
-		parentScope.initialValue = new UserEnteredDollars("123");
+		parentScope.initialValue = {
+			instance: new UserEnteredDollars("123")
+		};
 
 		var html = "<configuration-field value='initialValue'>Title:</configuration-field>";
 		var element = $compile(html)(parentScope);
 		$rootScope.$digest();
 
 		var inputField = element.find("input");
-		expect(inputField.attr("value")).to.be("123");
-		expect(inputField.hasClass("invalid")).to.be(false);
-		expect(inputField.attr("title")).to.be("");
+		expect(inputField.val()).to.be("$123");
+		// expect(inputField.hasClass("invalid")).to.be(false);
+		// expect(inputField.attr("title")).to.be("");
 	});
 
 	it("renders invalid values with a warning icon", function() {
