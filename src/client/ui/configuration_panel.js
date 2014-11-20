@@ -3,6 +3,7 @@
 	"use strict";
 
 	var configurationField = require("./configuration_field.js");
+	var UserEnteredDollars = require("../values/user_entered_dollars.js");
 
 	var configurationPanel = module.exports = angular.module("configurationPanel", [ configurationField.name ]);
 
@@ -12,13 +13,15 @@
 			transclude: false,
 			scope: {},
 			controller: function($scope, $element) {
-
+				$scope.startingBalance = new UserEnteredDollars("123");
+				$scope.costBasis = new UserEnteredDollars("456");
+				$scope.spending = new UserEnteredDollars("789x");
 			},
 			template:
 				'<div class="config">' +
-					'<configuration-field>Starting Balance:</configuration-field>' +
-					'<configuration-field>Starting Cost Basis:</configuration-field>' +
-					'<configuration-field>Yearly Spending:</configuration-field>' +
+					'<configuration-field value="startingBalance">Starting Balance:</configuration-field>' +
+					'<configuration-field value="costBasis">Starting Cost Basis:</configuration-field>' +
+					'<configuration-field value="spending">Yearly Spending:</configuration-field>' +
 			  '</div>',
 			replace: true
 		};
