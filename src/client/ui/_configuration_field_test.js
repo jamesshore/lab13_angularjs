@@ -46,9 +46,15 @@ describe("ConfigurationField", function() {
 		expect(inputField.hasClass("invalid")).to.be(true);
 	});
 
-	it("changes field when input changes", function() {
+	it("updates field when underlying value changes", function() {
+		var element = createField(new UserEnteredDollars("123"));
+		var inputField = element.find("input");
 
-	}); // TODO
+		parentScope.initialValue = new UserEnteredDollars("xxx");
+		$rootScope.$digest();
+
+		expect(inputField.val()).to.be("xxx");
+	});
 
 
 	function createField(userEnteredDollars) {

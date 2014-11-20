@@ -13,8 +13,10 @@
 			scope: {
 				value: "=value"
 			},
-			controller: function($scope, $element) {
-				render();
+			controller: [ "$scope", function($scope) {
+				$scope.$watch("value", function() {
+					render();
+				});
 				$scope.$watch("renderedText", function() {
 					$scope.value = new UserEnteredDollars($scope.renderedText);
 					render();
@@ -24,7 +26,7 @@
 					var target = new RenderTarget($scope);
 					$scope.value.renderTo(target);
 				}
-			},
+			} ],
 			template:
 				'<div class="config">' +
 				' <label ng-transclude></label>' +
