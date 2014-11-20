@@ -8,22 +8,18 @@ describe("ConfigurationField", function() {
 
 	var $compile;
 	var $rootScope;
+	var parentScope;
 
 	beforeEach(angular.mock.module(configurationField.name));
 
 	beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_) {
 		$compile = _$compile_;
 		$rootScope = _$rootScope_;
+		parentScope = $rootScope.$new();
 	}));
 
 	it("defaults to an initial value", function() {
-		var parentScope = $rootScope.$new();
-		parentScope.initialValue = new UserEnteredDollars("123");
-
-		var html = "<configuration-field value='initialValue'>Title:</configuration-field>";
-		var element = $compile(html)(parentScope);
-		$rootScope.$digest();
-
+		var element = createField(new UserEnteredDollars("123"));
 		var inputField = element.find("input");
 
 		expect(inputField.val()).to.be("123");
@@ -32,49 +28,36 @@ describe("ConfigurationField", function() {
 	});
 
 	it("renders invalid values with a warning icon", function() {
-		var parentScope = $rootScope.$new();
-		parentScope.initialValue = new UserEnteredDollars("xxx");
-
-		var html = "<configuration-field value='initialValue'>Title:</configuration-field>";
-		var element = $compile(html)(parentScope);
-		$rootScope.$digest();
-
+		var element = createField(new UserEnteredDollars("xxx"));
 		var inputField = element.find("input");
+
 		expect(inputField.val()).to.be("xxx");
 		expect(inputField.hasClass("invalid")).to.be(true);
 		expect(inputField.attr("title")).to.be("Invalid dollar amount");
 	});
 
 	it("changes rendering when user input changes", function() {
-		var parentScope = $rootScope.$new();
-		parentScope.initialValue = new UserEnteredDollars("123");
-
-		var html = "<configuration-field value='initialValue'>Title:</configuration-field>";
-		var element = $compile(html)(parentScope);
-		$rootScope.$digest();
+		var element = createField(new UserEnteredDollars("123"));
 		var inputField = element.find("input");
 
-		parentScope.renderedText = "xxx";
+		element.isolateScope().renderedText = "xxx";
 		$rootScope.$digest();
 
 		expect(inputField.hasClass("invalid")).to.be(true);
 	});
 
+	it("changes field when input changes", function() {
 
-	it("renders a label and field", function() {
-		// TODO
-	});
+	}); // TODO
 
-	it("stores user's input in the scope", function() {
-		// TODO
-	});
 
-	it("changes scope when user input changes", function() {
-		// TODO
-	});
+	function createField(userEnteredDollars) {
+		parentScope.initialValue = userEnteredDollars;
 
-	it("displays warning icon when a bad value is inputted", function() {
-		// TODO
-	});
+		var html = "<configuration-field value='initialValue'>Title:</configuration-field>";
+		var element = $compile(html)(parentScope);
+		$rootScope.$digest();
+		return element;
+	}
 
 });
