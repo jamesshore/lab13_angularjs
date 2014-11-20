@@ -41,8 +41,8 @@
 
 	RenderTarget.prototype.render = function render(values) {
 		this._scope.renderedText = values.text;
-		// this._scope.invalidClass = values.invalid ? "invalid" : "";
-		// this._scope.title = values.tooltip;
+		this._scope.invalidClass = values.invalid ? "invalid" : "";
+		this._scope.title = values.tooltip;
 	};
 
 })();
