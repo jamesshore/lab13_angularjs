@@ -36,14 +36,18 @@ describe("ConfigurationField", function() {
 		expect(inputField.attr("title")).to.be("Invalid dollar amount");
 	});
 
-	it("changes rendering when user input changes", function() {
-		var element = createField(new UserEnteredDollars("123"));
+	it("calls given onChange function when user input changes", function() {
+		var capturedValue;
+		var onChange = function (value) {
+			capturedValue = value;
+		};
+		var element = createField(new UserEnteredDollars("123"), onChange);
 		var inputField = element.find("input");
 
-		element.isolateScope().renderedText = "xxx";
+		element.isolateScope().text = "xxx";
 		$rootScope.$digest();
 
-		expect(inputField.hasClass("invalid")).to.be(true);
+		expect(capturedValue).to.eql(new UserEnteredDollars("xxx"));
 	});
 
 	it("updates field when underlying value changes", function() {
@@ -57,10 +61,11 @@ describe("ConfigurationField", function() {
 	});
 
 
-	function createField(userEnteredDollars) {
+	function createField(userEnteredDollars, onChange) {
 		parentScope.initialValue = userEnteredDollars;
+		parentScope.onChange = onChange || function () {};
 
-		var html = "<configuration-field value='initialValue'>Title:</configuration-field>";
+		var html = "<configuration-field value='initialValue' on-change='onChange'>Title:</configuration-field>";
 		var element = $compile(html)(parentScope);
 		$rootScope.$digest();
 		return element;

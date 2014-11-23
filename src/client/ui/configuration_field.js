@@ -11,40 +11,38 @@
 			restrict: "E",
 			transclude: true,
 			scope: {
-				value: "=value"
+				value: "=value",
+				onChange: "=onChange"
 			},
-			controller: [ "$scope", function($scope) {
-				$scope.$watch("value", function() {
-					render();
-				});
-				$scope.$watch("renderedText", function() {
-					$scope.value = new UserEnteredDollars($scope.renderedText);
-					render();
-				});
 
-				function render() {
-					var target = new RenderTarget($scope);
-					$scope.value.renderTo(target);
+			controller: [ "$scope", function($scope) {
+				$scope.$watch("value", updateValue);
+				$scope.$watch("text", triggerChange);
+
+				function updateValue(value) {
+					function render(values) {
+						$scope.text = value.getUserText();
+						$scope.inputClass = values.invalid ? "invalid" : "";
+						$scope.tooltip = values.tooltip;
+					}
+
+					value.renderTo({render: render});
+				}
+
+				function triggerChange(text) {
+					$scope.onChange(new UserEnteredDollars(text));
 				}
 			} ],
+
 			template:
 				'<div class="config">' +
 				' <label ng-transclude></label>' +
-				' <input type="text" ng-class="invalidClass" ng-model="renderedText" title="{{title}}">' +
+				' <input type="text" ng-model="text" ng-class="inputClass" title="{{tooltip}}">' +
 				'</div>',
+
 			replace: true
 		};
 
 	});
-
-	function RenderTarget(scope) {
-		this._scope = scope;
-	}
-
-	RenderTarget.prototype.render = function render(values) {
-		this._scope.renderedText = this._scope.value.getUserText();
-		this._scope.invalidClass = values.invalid ? "invalid" : "";
-		this._scope.title = values.tooltip;
-	};
 
 })();

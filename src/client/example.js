@@ -14,16 +14,31 @@
 	var TaxRate = require("./values/tax_rate.js");
 
 	var helloWorld = angular.module("helloWorld", [configurationPanel.name, stockMarketTable.name]);
+
 	helloWorld.controller("ExampleController", ["$scope", function ($scope) {
-		var firstYear = new StockMarketYear(
-			new Year(2010),
-			new ValidDollars(10000),
-			new ValidDollars(3000),
-			new GrowthRate(10),
-			new TaxRate(25)
-		);
-		$scope.projection = new StockMarketProjection(firstYear, new Year(2050), new ValidDollars(36));
+		function updateProjection() {
+			$scope.projection = projectionFor($scope.configuration);
+		}
+
 		$scope.configuration = new UserConfiguration();
+		$scope.configuration.onChange(updateProjection);
+
+		updateProjection();
 	}]);
 
+	function projectionFor(config) {
+		var firstYear = new StockMarketYear(
+			UserConfiguration.STARTING_YEAR,
+			config.getStartingBalance(),
+			config.getStartingCostBasis(),
+			UserConfiguration.INTEREST_RATE,
+			UserConfiguration.CAPITAL_GAINS_TAX_RATE
+		);
+		var projection = new StockMarketProjection(
+			firstYear,
+			UserConfiguration.ENDING_YEAR,
+			config.getYearlySpending()
+		);
+		return projection;
+	}
 })();

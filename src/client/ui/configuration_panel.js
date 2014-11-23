@@ -3,6 +3,7 @@
 	"use strict";
 
 	var configurationField = require("./configuration_field.js");
+	var UserEnteredDollars = require("../values/user_entered_dollars.js");
 
 	var configurationPanel = module.exports = angular.module("configurationPanel", [ configurationField.name ]);
 
@@ -13,19 +14,38 @@
 			scope: {
 				configuration: "=configuration"
 			},
+
 			controller: [ "$scope", function($scope) {
-				$scope.$watch("configuration", function() {
-					$scope.startingBalance = $scope.configuration.getStartingBalance();
-					$scope.costBasis = $scope.configuration.getStartingCostBasis();
-					$scope.spending = $scope.configuration.getYearlySpending();
+				var configuration = $scope.configuration;
+
+				function updateValues() {
+					$scope.startingBalance = configuration.getStartingBalance();
+					$scope.costBasis = configuration.getStartingCostBasis();
+					$scope.spending = configuration.getYearlySpending();
+				}
+
+				[
+					"setStartingBalance",
+					"setStartingCostBasis",
+					"setYearlySpending"
+				].forEach(function (setter) {
+					$scope[setter] = configuration[setter].bind(configuration);
 				});
+
+				configuration.onChange(updateValues);
+				updateValues();
 			} ],
+
 			template:
 				'<div class="config">' +
-					'<configuration-field value="startingBalance">Starting Balance:</configuration-field>' +
-					'<configuration-field value="costBasis">Cost Basis:</configuration-field>' +
-					'<configuration-field value="spending">Yearly Spending:</configuration-field>' +
+				'  <configuration-field value="startingBalance"' +
+				'                       on-change="setStartingBalance">Starting Balance:</configuration-field>' +
+				'  <configuration-field value="costBasis"' +
+				'                       on-change="setStartingCostBasis">Cost Basis:</configuration-field>' +
+				'  <configuration-field value="spending"' +
+				'                       on-change="setYearlySpending">Yearly Spending:</configuration-field>' +
 			  '</div>',
+
 			replace: true
 		};
 	});
