@@ -28,20 +28,23 @@ describe("ConfigurationPanel", function() {
 	it("contains three fields", function() {
 		checkDirective(
 			fields[0],
-			'<configuration-field value="startingBalance">Starting Balance:</configuration-field>',
+			'<configuration-field value="startingBalance" on-change="setStartingBalance">Starting Balance:</configuration-field>',
 			"startingBalance",
+			"setStartingBalance",
 			UserConfiguration.DEFAULT_STARTING_BALANCE
 		);
 		checkDirective(
 			fields[1],
-			'<configuration-field value="costBasis">Cost Basis:</configuration-field>',
+			'<configuration-field value="costBasis" on-change="setStartingCostBasis">Cost Basis:</configuration-field>',
 			"costBasis",
+			"setStartingCostBasis",
 			UserConfiguration.DEFAULT_STARTING_COST_BASIS
 		);
 		checkDirective(
 			fields[2],
-			'<configuration-field value="spending">Yearly Spending:</configuration-field>',
+			'<configuration-field value="spending" on-change="setYearlySpending">Yearly Spending:</configuration-field>',
 			"spending",
+			"setYearlySpending",
 			UserConfiguration.DEFAULT_YEARLY_SPENDING
 		);
 	});
@@ -60,15 +63,16 @@ describe("ConfigurationPanel", function() {
 		return element;
 	}
 
-	function checkDirective(actualDom, expectedHtml, propertyName, expectedValue) {
-		var expectedRendering = renderField(expectedHtml, propertyName, expectedValue);
+	function checkDirective(actualDom, expectedHtml, valuePropName, onChangePropName, expectedValue) {
+		var expectedRendering = renderField(expectedHtml, valuePropName, onChangePropName, expectedValue);
 		var actualRendering = actualDom.innerHTML;
 		expect(actualRendering).to.equal(expectedRendering);
 	}
 
-	function renderField(html, propertyName, expectedValue) {
+	function renderField(html, valuePropName, onChangePropName, expectedValue) {
 		var expectedScope = $rootScope.$new();
-		expectedScope[propertyName] = expectedValue;
+		expectedScope[valuePropName] = expectedValue;
+		expectedScope[onChangePropName] = function () {};
 		var element = $compile(html)(expectedScope);
 		expectedScope.$digest();
 		return element[0].innerHTML;
