@@ -13,13 +13,19 @@
 			scope: {
 				configuration: "=configuration"
 			},
+
 			controller: [ "$scope", function($scope) {
-				$scope.$watch("configuration", function() {
+				function updateValues() {
 					$scope.startingBalance = $scope.configuration.getStartingBalance();
 					$scope.costBasis = $scope.configuration.getStartingCostBasis();
 					$scope.spending = $scope.configuration.getYearlySpending();
-				});
+				}
+
+				$scope.configuration.onChange(updateValues);
+
+				updateValues();
 			} ],
+
 			template:
 				'<div class="config">' +
 					'<configuration-field value="startingBalance">Starting Balance:</configuration-field>' +
