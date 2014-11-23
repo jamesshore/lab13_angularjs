@@ -12,24 +12,18 @@
 	var ValidDollars = require("./values/valid_dollars.js");
 	var GrowthRate = require("./values/growth_rate.js");
 	var TaxRate = require("./values/tax_rate.js");
-	var UserEnteredDollars = require("./values/user_entered_dollars.js");
 
 	var helloWorld = angular.module("helloWorld", [configurationPanel.name, stockMarketTable.name]);
+
 	helloWorld.controller("ExampleController", ["$scope", function ($scope) {
-		$scope.configuration = new UserConfiguration();
-		$scope.projection = projectionFor($scope.configuration);
-
-		$scope.configuration.onChange(function () {
-			console.log("update projection");
+		function updateProjection() {
 			$scope.projection = projectionFor($scope.configuration);
-		});
+		}
 
-		setTimeout(function () {
-			$scope.$apply(function () {
-				console.log("update configuration");
-				$scope.configuration.setStartingBalance(new UserEnteredDollars("55555"));
-			});
-		}, 2000);
+		$scope.configuration = new UserConfiguration();
+		$scope.configuration.onChange(updateProjection);
+
+		updateProjection();
 	}]);
 
 	function projectionFor(config) {
