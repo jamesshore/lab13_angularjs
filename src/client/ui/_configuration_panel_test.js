@@ -53,23 +53,6 @@ describe("ConfigurationPanel", function() {
 		expect(scope.spending).to.eql(UserConfiguration.DEFAULT_YEARLY_SPENDING);
 	});
 
-	it("updates when user configuration is replaced", function() {
-		var foo = new UserEnteredDollars("foo");
-		var bar = new UserEnteredDollars("bar");
-		var baz = new UserEnteredDollars("baz");
-
-		var newConfig = new UserConfiguration();
-		newConfig.setStartingBalance(foo);
-		newConfig.setStartingCostBasis(bar);
-		newConfig.setYearlySpending(baz);
-
-		parentScope.configuration = newConfig;
-		$rootScope.$digest();
-
-		var panelScope = panel.isolateScope();
-		expect(panelScope.startingBalance).to.eql(foo);
-	});
-
 	function createPanel() {
 		var html = "<configuration-panel configuration='configuration'></configuration-panel>";
 		var element = $compile(html)(parentScope);
