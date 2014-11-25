@@ -13,8 +13,9 @@
 	var GrowthRate = require("./values/growth_rate.js");
 	var TaxRate = require("./values/tax_rate.js");
 
-	var helloWorld = angular.module("helloWorld", [configurationPanel.name, stockMarketTable.name]);
-	helloWorld.controller("ExampleController", ["$scope", function ($scope) {
+	var example = angular.module("example", [configurationPanel.name, stockMarketTable.name]);
+	
+	example.controller("ExampleController", ["$scope", function ($scope) {
 		var firstYear = new StockMarketYear(
 			new Year(2010),
 			new ValidDollars(10000),
