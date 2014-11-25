@@ -20,7 +20,7 @@ describe("ExampleController", function() {
 
 	beforeEach(angular.mock.inject(function(_$controller_) {
 		var $controller = _$controller_;
-		scope = {};
+		scope = { $applyAsync: function(callback) { callback(); } };
 		controller = $controller("ExampleController", { $scope: scope });
 	}));
 

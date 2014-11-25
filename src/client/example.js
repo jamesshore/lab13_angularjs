@@ -20,7 +20,9 @@
 		$scope.projection = projectionFor($scope.configuration);
 
 		$scope.configuration.onChange(function() {
-			$scope.projection = projectionFor($scope.configuration);
+			$scope.$applyAsync(function() {
+				$scope.projection = projectionFor($scope.configuration);
+			});
 		});
 	}]);
 
