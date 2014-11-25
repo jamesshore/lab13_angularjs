@@ -12,6 +12,7 @@ describe("ConfigurationPanel", function() {
 	var parentScope;
 	var panel;
 	var fields;
+	var config;
 
 	beforeEach(angular.mock.module(configurationPanel.name));
 
@@ -20,7 +21,8 @@ describe("ConfigurationPanel", function() {
 		$rootScope = _$rootScope_;
 		parentScope = $rootScope.$new();
 
-		parentScope.configuration = new UserConfiguration();
+		config = new UserConfiguration();
+		parentScope.configuration = config;
 		panel = createPanel();
 		fields = panel.find("div");
 	}));
@@ -48,9 +50,9 @@ describe("ConfigurationPanel", function() {
 
 	it("initializes fields from user configuration", function() {
 		var scope = panel.isolateScope();
-		expect(scope.startingBalance).to.eql(UserConfiguration.DEFAULT_STARTING_BALANCE);
-		expect(scope.costBasis).to.eql(UserConfiguration.DEFAULT_STARTING_COST_BASIS);
-		expect(scope.spending).to.eql(UserConfiguration.DEFAULT_YEARLY_SPENDING);
+		expect(scope.container.startingBalance).to.eql(UserConfiguration.DEFAULT_STARTING_BALANCE);
+		expect(scope.container.costBasis).to.eql(UserConfiguration.DEFAULT_STARTING_COST_BASIS);
+		expect(scope.container.spending).to.eql(UserConfiguration.DEFAULT_YEARLY_SPENDING);
 	});
 
 	it("updates when user configuration is replaced", function() {
@@ -67,7 +69,18 @@ describe("ConfigurationPanel", function() {
 		$rootScope.$digest();
 
 		var panelScope = panel.isolateScope();
-		expect(panelScope.startingBalance).to.eql(foo);
+		expect(panelScope.container.startingBalance).to.eql(foo);
+	});
+
+	it("updates user configuration when user input changes", function() {
+		fields.eq(0).isolateScope().setText("foo");
+		fields.eq(1).isolateScope().setText("bar");
+		fields.eq(2).isolateScope().setText("baz");
+		$rootScope.$digest();
+
+		expect(config.getStartingBalance()).to.eql(new UserEnteredDollars("foo"));
+		expect(config.getStartingCostBasis()).to.eql(new UserEnteredDollars("bar"));
+		expect(config.getYearlySpending()).to.eql(new UserEnteredDollars("baz"));
 	});
 
 	function createPanel() {

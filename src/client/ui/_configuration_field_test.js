@@ -63,6 +63,7 @@ describe("ConfigurationField", function() {
 
 		var inputField = element.find("input");
 		expect(inputField.val()).to.be("9998");
+		expect(parentScope.initialValue).to.eql(new UserEnteredDollars("9998"));
 	});
 
 

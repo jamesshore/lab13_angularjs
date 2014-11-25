@@ -14,17 +14,25 @@
 				configuration: "=configuration"
 			},
 			controller: [ "$scope", function($scope) {
+				$scope.container = {};
+
 				$scope.$watch("configuration", function() {
-					$scope.startingBalance = $scope.configuration.getStartingBalance();
-					$scope.costBasis = $scope.configuration.getStartingCostBasis();
-					$scope.spending = $scope.configuration.getYearlySpending();
+					$scope.container.startingBalance = $scope.configuration.getStartingBalance();
+					$scope.container.costBasis = $scope.configuration.getStartingCostBasis();
+					$scope.container.spending = $scope.configuration.getYearlySpending();
+				});
+
+				$scope.$watchCollection("container", function() {
+					$scope.configuration.setStartingBalance($scope.container.startingBalance);
+					$scope.configuration.setStartingCostBasis($scope.container.costBasis);
+					$scope.configuration.setYearlySpending($scope.container.spending);
 				});
 			} ],
 			template:
 				'<div class="config">' +
-					'<configuration-field value="startingBalance">Starting Balance:</configuration-field>' +
-					'<configuration-field value="costBasis">Cost Basis:</configuration-field>' +
-					'<configuration-field value="spending">Yearly Spending:</configuration-field>' +
+					'<configuration-field value="container.startingBalance">Starting Balance:</configuration-field>' +
+					'<configuration-field value="container.costBasis">Cost Basis:</configuration-field>' +
+					'<configuration-field value="container.spending">Yearly Spending:</configuration-field>' +
 			  '</div>',
 			replace: true
 		};
