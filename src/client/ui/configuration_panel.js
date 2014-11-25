@@ -16,7 +16,7 @@
 			controller: [ "$scope", function($scope) {
 				$scope.container = {};
 
-				$scope.$watch("configuration", function() {
+				$scope.$watchCollection("configuration", function() {
 					$scope.container.startingBalance = $scope.configuration.getStartingBalance();
 					$scope.container.costBasis = $scope.configuration.getStartingCostBasis();
 					$scope.container.spending = $scope.configuration.getYearlySpending();

@@ -83,6 +83,15 @@ describe("ConfigurationPanel", function() {
 		expect(config.getYearlySpending()).to.eql(new UserEnteredDollars("baz"));
 	});
 
+	it("update configuration fields when user configuration changes", function() {
+		var newValue = new UserEnteredDollars("98765");
+
+		config.setStartingBalance(newValue);
+		$rootScope.$digest();
+
+		expect(panel.isolateScope().container.startingBalance).to.eql(newValue);
+	});
+
 	function createPanel() {
 		var html = "<configuration-panel configuration='configuration'></configuration-panel>";
 		var element = $compile(html)(parentScope);
