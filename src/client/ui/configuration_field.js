@@ -14,6 +14,10 @@
 				value: "=value"
 			},
 			controller: [ "$scope", function($scope) {
+				$scope.setValue = function(newString) {
+					$scope.renderedText = newString;
+				};
+
 				$scope.$watch("value", function() {
 					render();
 				});
