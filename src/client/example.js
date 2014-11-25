@@ -13,18 +13,26 @@
 	var GrowthRate = require("./values/growth_rate.js");
 	var TaxRate = require("./values/tax_rate.js");
 
-	var example = angular.module("example", [configurationPanel.name, stockMarketTable.name]);
-	
+	var example = module.exports = angular.module("example", [configurationPanel.name, stockMarketTable.name]);
+
 	example.controller("ExampleController", ["$scope", function ($scope) {
+		$scope.configuration = new UserConfiguration();
+		$scope.projection = projectionFor($scope.configuration);
+
+		$scope.configuration.onChange(function() {
+			$scope.projection = projectionFor($scope.configuration);
+		});
+	}]);
+
+	function projectionFor(config) {
 		var firstYear = new StockMarketYear(
 			new Year(2010),
-			new ValidDollars(10000),
-			new ValidDollars(3000),
+			config.getStartingBalance(),
+			config.getStartingCostBasis(),
 			new GrowthRate(10),
 			new TaxRate(25)
 		);
-		$scope.projection = new StockMarketProjection(firstYear, new Year(2050), new ValidDollars(36));
-		$scope.configuration = new UserConfiguration();
-	}]);
+		return new StockMarketProjection(firstYear, new Year(2050), config.getYearlySpending());
+	}
 
 })();
