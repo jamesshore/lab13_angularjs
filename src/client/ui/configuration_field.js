@@ -14,7 +14,7 @@
 				value: "=value"
 			},
 			controller: [ "$scope", function($scope) {
-				$scope.setValue = function(newString) {
+				$scope.setText = function(newString) {
 					$scope.renderedText = newString;
 				};
 

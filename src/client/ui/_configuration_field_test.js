@@ -56,9 +56,9 @@ describe("ConfigurationField", function() {
 		expect(inputField.val()).to.be("xxx");
 	});
 
-	it("can be changed programmatically (presumably for testing purposes)", function() {
+	it("can be changed programmatically (for testing purposes)", function() {
 		var element = createField(new UserEnteredDollars("123"));
-		element.isolateScope().setValue("9998");
+		element.isolateScope().setText("9998");
 		$rootScope.$digest();
 
 		var inputField = element.find("input");
