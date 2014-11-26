@@ -41,13 +41,13 @@ describe("ExampleController", function() {
 
 	function projectionFor(config) {
 		var firstYear = new StockMarketYear(
-			new Year(2010),
+			UserConfiguration.STARTING_YEAR,
 			config.getStartingBalance(),
 			config.getStartingCostBasis(),
-			new GrowthRate(10),
-			new TaxRate(25)
+			UserConfiguration.INTEREST_RATE,
+			UserConfiguration.CAPITAL_GAINS_TAX_RATE
 		);
-		return new StockMarketProjection(firstYear, new Year(2050), config.getYearlySpending());
+		return new StockMarketProjection(firstYear, UserConfiguration.ENDING_YEAR, config.getYearlySpending());
 	}
 
 });

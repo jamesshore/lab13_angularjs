@@ -16,7 +16,7 @@
 			restrict: "E",
 			transclude: false,
 			scope: {
-				projection: "=projection"
+				projection: "="
 			},
 			controller: [ "$scope", function($scope) {
 				$scope.$watch("projection", function() {

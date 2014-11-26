@@ -11,7 +11,7 @@
 			restrict: "A",
 			transclude: false,
 			scope: {
-				value: "=value"
+				value: "="
 			},
 			controller: [ "$scope", function($scope) {
 				$scope.$watch("value", function() {

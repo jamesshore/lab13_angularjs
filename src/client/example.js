@@ -9,7 +9,6 @@
 	var StockMarketProjection = require("./domain/stock_market_projection.js");
 	var StockMarketYear = require("./domain/stock_market_year.js");
 	var Year = require("./values/year.js");
-	var ValidDollars = require("./values/valid_dollars.js");
 	var GrowthRate = require("./values/growth_rate.js");
 	var TaxRate = require("./values/tax_rate.js");
 
@@ -20,7 +19,7 @@
 		$scope.projection = projectionFor($scope.configuration);
 
 		$scope.configuration.onChange(function() {
-			$scope.$applyAsync(function() {
+			$scope.$applyAsync(function() {                             // this call is not tested
 				$scope.projection = projectionFor($scope.configuration);
 			});
 		});
@@ -28,13 +27,13 @@
 
 	function projectionFor(config) {
 		var firstYear = new StockMarketYear(
-			new Year(2010),
+			UserConfiguration.STARTING_YEAR,
 			config.getStartingBalance(),
 			config.getStartingCostBasis(),
-			new GrowthRate(10),
-			new TaxRate(25)
+			UserConfiguration.INTEREST_RATE,
+			UserConfiguration.CAPITAL_GAINS_TAX_RATE
 		);
-		return new StockMarketProjection(firstYear, new Year(2050), config.getYearlySpending());
+		return new StockMarketProjection(firstYear, UserConfiguration.ENDING_YEAR, config.getYearlySpending());
 	}
 
 })();

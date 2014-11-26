@@ -8,9 +8,9 @@ stockMarketCell.directive("stockMarketCell", function() {
 		restrict: "A",
 		transclude: false,
 		scope: {
-			value: '=value'
+			value: '='
 		},
-		link: function(scope, element, attrs) {
+		link: function(scope, element) {
 			scope.$watch("value", function() {
 				var target = new RenderTarget(element);
 				scope.value.renderTo(target);

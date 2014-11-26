@@ -11,7 +11,7 @@
 			restrict: "E",
 			transclude: false,
 			scope: {
-				configuration: "=configuration"
+				configuration: "="
 			},
 			controller: [ "$scope", function($scope) {
 				$scope.container = {};

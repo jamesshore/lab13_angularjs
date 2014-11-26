@@ -11,20 +11,21 @@
 			restrict: "E",
 			transclude: true,
 			scope: {
-				value: "=value"
+				value: "="
 			},
 			controller: [ "$scope", function($scope) {
-				$scope.setText = function(newString) {
-					$scope.renderedText = newString;
-				};
-
 				$scope.$watch("value", function() {
 					render();
 				});
+
 				$scope.$watch("renderedText", function() {
 					$scope.value = new UserEnteredDollars($scope.renderedText);
 					render();
 				});
+
+				$scope.setText = function(newString) {
+					$scope.renderedText = newString;
+				};
 
 				function render() {
 					var target = new RenderTarget($scope);
