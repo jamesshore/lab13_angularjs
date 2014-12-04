@@ -1,9 +1,9 @@
 The Lab: Front-End Frameworks: AngularJS
 ===========
 
-This repository contains the sample code for the [Front-End Frameworks: AngularJS](http://www.letscodejavascript.com/v3/episodes/lab/13) episode of James Shore's screencast. Let's Code: Test-Driven JavaScript is a screencast series focused on rigorous, professional JavaScript development.
+This repository contains the sample code for the [Front-End Frameworks: AngularJS](http://www.letscodejavascript.com/v3/episodes/lab/13) episodes ([Part I](http://www.letscodejavascript.com/v3/episodes/lab/13), [Part II](http://www.letscodejavascript.com/v3/episodes/lab/14)) of James Shore's screencast. Let's Code: Test-Driven JavaScript is a screencast series focused on rigorous, professional JavaScript development.
 
-This episode is an exploration and review of the [AngularJS](https://angularjs.org/) framework for building web applications. This repository contains an example application written in AngularJS. It demonstrates several concepts:
+These episodes are an exploration and review of the [AngularJS](https://angularjs.org/) framework for building web applications. This repository contains an example application written in AngularJS. It demonstrates several concepts:
 
 1. **Sample application.** The sample application code can be found in `src/client`. The main page template is in `index.html`. Its controller is in `example.js`. The AngularJS UI code consists of several directives, which may be found in `src/client/ui`.
 
@@ -17,7 +17,7 @@ This episode is an exploration and review of the [AngularJS](https://angularjs.o
 
   Other than the AngularJS integration, there's nothing unusual about the CommonJS infrastructure. See the "browserify" target in `Jakefile.js` and `build/util/browserify_runner.js` for the automated build. (You can use `browserify_runner.js` in your own build scripts.) See `build/config/karma.conf.js` for the karma-commonjs configuration needed to make tests work.
 
-For further details about how this code works, watch [the screencast](http://www.letscodejavascript.com/v3/episodes/lab/13).
+For further details about how this code works, watch [the screencasts](http://www.letscodejavascript.com/v3/episodes/lab/13).
 
 
 Setup
