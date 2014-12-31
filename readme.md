@@ -1,7 +1,7 @@
 The Lab: Front-End Frameworks: AngularJS
 ===========
 
-This repository contains the sample code for the [Front-End Frameworks: AngularJS](http://www.letscodejavascript.com/v3/episodes/lab/13) episodes ([Part I](http://www.letscodejavascript.com/v3/episodes/lab/13), [Part II](http://www.letscodejavascript.com/v3/episodes/lab/14)) of James Shore's screencast. Let's Code: Test-Driven JavaScript is a screencast series focused on rigorous, professional JavaScript development.
+This repository contains the sample code for the [Front-End Frameworks: AngularJS](http://www.letscodejavascript.com/v3/episodes/lab/13) episodes ([Part I](http://www.letscodejavascript.com/v3/episodes/lab/13), [Part II](http://www.letscodejavascript.com/v3/episodes/lab/14), [Part III](http://www.letscodejavascript.com/v3/episodes/lab/15)) of James Shore's screencast. Let's Code: Test-Driven JavaScript is a screencast series focused on rigorous, professional JavaScript development.
 
 These episodes are an exploration and review of the [AngularJS](https://angularjs.org/) framework for building web applications. This repository contains an example application written in AngularJS. It demonstrates several concepts:
 
@@ -9,7 +9,7 @@ These episodes are an exploration and review of the [AngularJS](https://angularj
 
   The application also includes a domain layer, value objects, and a (simulated) persistence layer. Those layers are in subdirectories of `src/client`. This architecture was an experiment to see how well AngularJS handled an approach outside of its comfort zone. It didn't work well, and I don't recommend following this pattern in your own application.
 
-  See the screencast for more information about the sample app.
+  See the screencasts for more information about the sample app.
 
 2. **Unit Tests.** All the code is unit tested. You can find tests of an AngularJS controller in `src/client/_example_test.js` and tests of directives in `src/client/ui/_*_test.js`. Pay particular attention to the setup code; it's tricky to get right and the test setup fails silently if it's wrong. Also see `build/config/karma.conf.js` for how the Karma test runner is configured. In particular, the `angular-mocks` file must be included, or the test setup silently fails.
 
