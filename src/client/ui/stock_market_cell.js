@@ -8,7 +8,7 @@ stockMarketCell.directive("stockMarketCell", function() {
 		restrict: "A",
 		transclude: false,
 		scope: {
-			value: '='
+			value: '=*'
 		},
 		link: function(scope, element) {
 			scope.$watch("value", function() {

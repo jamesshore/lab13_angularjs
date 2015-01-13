@@ -37,13 +37,16 @@ describe("StockMarketRow", function() {
 	}));
 
 	it("renders a stock market year", function() {
-		checkDirective(cells[0], '<td stock-market-cell value="year"></td>', "year", new Year(1984));
-		checkDirective(cells[1], '<td stock-market-cell value="startingBalance"></td>', "startingBalance", new ValidDollars(986));
-		checkDirective(cells[2], '<td stock-market-cell value="costBasis"></td>', "costBasis", new ValidDollars(20));
-		checkDirective(cells[3], '<td stock-market-cell value="sellOrders"></td>', "sellOrders", new ValidDollars(-100));
-		checkDirective(cells[4], '<td stock-market-cell value="taxes"></td>', "taxes", new ValidDollars(-43));
-		checkDirective(cells[5], '<td stock-market-cell value="growth"></td>', "growth", new ValidDollars(84));
-		checkDirective(cells[6], '<td stock-market-cell value="endingBalance"></td>', "endingBalance", new ValidDollars(927));
+		// This is a very poor test; ideally, it would describe the exact values we expect to see from each cell,
+		// but I couldn't figure out how to do that without relying on cell implementation details. So this is just
+		// a duplication of the production code, which is pretty nasty.
+		checkDirective(cells[0], '<td stock-market-cell value="value.year()"></td>');
+		checkDirective(cells[1], '<td stock-market-cell value="value.startingBalance()"></td>');
+		checkDirective(cells[2], '<td stock-market-cell value="value.startingCostBasis()"></td>');
+		checkDirective(cells[3], '<td stock-market-cell value="value.totalSellOrders().flipSign()"></td>');
+		checkDirective(cells[4], '<td stock-market-cell value="value.capitalGainsTaxIncurred().flipSign()"></td>');
+		checkDirective(cells[5], '<td stock-market-cell value="value.growth()"></td>');
+		checkDirective(cells[6], '<td stock-market-cell value="value.endingBalance()"></td>');
 	});
 
 	it("updates when year changes", function() {
@@ -56,20 +59,20 @@ describe("StockMarketRow", function() {
 		);
 		$rootScope.$digest();
 
-		checkDirective(cells[0], '<td stock-market-cell value="year"></td>', "year", new Year(2948));
+		checkDirective(cells[0], '<td stock-market-cell value="value.year()"></td>');
 	});
-
-	function checkDirective(actualRow, expectedHtml, propertyName, expectedValue) {
-		var expectedRendering = renderCell(expectedHtml, propertyName, expectedValue);
-		var actualRendering = actualRow.outerHTML;
-		expect(actualRendering).to.equal(expectedRendering);
-	}
 
 	function createRow(valueProperty) {
 		var html = "<table><tbody><tr stock-market-row value='" + valueProperty + "'></tr></tbody></table>";
 		var element = $compile(html)(parentScope);
 		$rootScope.$digest();
 		return element.find("tr").eq(0);
+	}
+
+	function checkDirective(actualRow, expectedHtml) {
+		var expectedRendering = renderCell(expectedHtml, "value", parentScope.year);
+		var actualRendering = actualRow.outerHTML;
+		expect(actualRendering).to.equal(expectedRendering);
 	}
 
 	function renderCell(cellHtml, propertyName, expectedValue) {

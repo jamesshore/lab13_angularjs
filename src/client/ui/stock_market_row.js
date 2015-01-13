@@ -1,4 +1,4 @@
-// Copyright (c) 2014 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
+// Copyright (c) 2014-2015 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
 (function() {
 	"use strict";
 
@@ -13,32 +13,18 @@
 			scope: {
 				value: "="
 			},
-			controller: [ "$scope", function($scope) {
-				$scope.$watch("value", function() {
-					var value = $scope.value;
-
-					$scope.year = value.year();
-					$scope.startingBalance = value.startingBalance();
-					$scope.costBasis = value.startingCostBasis();
-					$scope.sellOrders = value.totalSellOrders().flipSign();
-					$scope.taxes = value.capitalGainsTaxIncurred().flipSign();
-					$scope.growth = value.growth();
-					$scope.endingBalance = value.endingBalance();
-				});
-			} ],
 			template:
 				'<tr>' +
-					'<td stock-market-cell value="year"></td>' +
-					'<td stock-market-cell value="startingBalance"></td>' +
-					'<td stock-market-cell value="costBasis"></td>' +
-					'<td stock-market-cell value="sellOrders"></td>' +
-					'<td stock-market-cell value="taxes"></td>' +
-					'<td stock-market-cell value="growth"></td>' +
-					'<td stock-market-cell value="endingBalance"></td>' +
+					'<td stock-market-cell value="value.year()"></td>' +
+					'<td stock-market-cell value="value.startingBalance()"></td>' +
+					'<td stock-market-cell value="value.startingCostBasis()"></td>' +
+					'<td stock-market-cell value="value.totalSellOrders().flipSign()"></td>' +
+					'<td stock-market-cell value="value.capitalGainsTaxIncurred().flipSign()"></td>' +
+					'<td stock-market-cell value="value.growth()"></td>' +
+					'<td stock-market-cell value="value.endingBalance()"></td>' +
 				'</tr>',
 			replace: true
 		};
 	});
-
 })();
 
