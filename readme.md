@@ -42,7 +42,7 @@ Running the Tests
 
 1. Run `./jake.sh karma` (Unix/Mac) or `jake karma` (Windows) to start the Karma server.
 2. Start the browsers you want to test and point each one at `http://localhost:9876`.
-3. Run `./jake.sh` (Unix/Mac) or `jake` (Windows) every time you want to build and test.
+3. Run `./jake.sh loose=true` (Unix/Mac) or `jake loose=true` (Windows) every time you want to build and test.
 
 
 License
